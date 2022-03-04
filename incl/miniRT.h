@@ -109,7 +109,7 @@ int		ft_digit_check(char *argv);
 int		ft_atoll(const char *str, long long int *out);
 
 /* ft_utils_mlx.c */
-void ft_mlx(t_mlx_view mlx);
+void ft_mlx(void);
 
 /* ft_arg_check.c */
 int line_check(char **line, int last_check);

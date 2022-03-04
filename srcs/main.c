@@ -15,13 +15,12 @@
 int	main(int argc, char **argv)
 {
 	int			error;
-	t_mlx_view	mlx;
 
 	error = argument_check(argc, argv);
 	if(error)
 		return (error);
 	//error = list_builder
-	ft_mlx(mlx);
+	ft_mlx();
 
 
 }
