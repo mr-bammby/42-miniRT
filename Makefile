@@ -7,7 +7,7 @@ SRCD		= ./srcs/
 UNAME = $(shell uname)
 #echo $(UNAME)
 
-SRC			=	main.c ft_utils.c ft_utils_num.c
+SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx.c ft_arg_check.c
 
 # Command to add the source folder prefix (instead of having it added manually to SRC)
 SRCF		= $(addprefix $(SRCD),$(SRC))
@@ -36,22 +36,36 @@ LIBGNLL		= libgnl.a
 LIBGNL_OBJF    = ${LIBGNLD}${LIBGNL_OBJD}/*.o
 LIBGNL_MAKE    = make -C ${LIBGNLD}
 
+UNAME := $(shell uname)
 
+ifeq ($(UNAME), Linux)
+MINILIB_D = ./mlx_linux
 
-#if to the respective c file in the source directory no matching o file in the object
-#directory is available, then create it according to the following rules:
-#Note: the object directory will only be created if not existing already. -p flag throws no errors when already there
-$(OBJD)%.o: $(SRCD)%.c
+$(OBJD)%.o: $(SRCD)%.c 
 	@mkdir -p $(OBJD)
 	$(CC) $(CFLAGS) -I ${HEADD} -c -o $@ $<
 
-# $(NAME):	${OBJF}
-# 			make libftmake
-# 			$(CC) $(CFLAGS) $(SRCF) -o $(NAME) $(HEADD)$(HEADF) $(LIBFTD)$(LIBFTL)
 $(NAME):	${OBJF}
 			make libftmake
 			make libgnlmake
-			$(CC) $(CFLAGS) $(SRCF) -o $(NAME) -L $(HEADD) $(LIBFTD)$(LIBFTL) ${LIBGNLD}${LIBGNLL} -L /usr/local/lib -I /usr/local/include 
+			make mlx_all
+			$(CC) $(CFLAGS) $(SRCF) -o $(NAME) ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) -L /usr/local/lib -I /usr/local/include ./mlx_linux/libmlx_Linux.a -L /usr/include/X11/extensions/ -lXext -lX11 -lm
+
+endif
+
+ifeq ($(UNAME), Darwin)
+MINILIB_D = ./mlx_mac
+
+$(OBJD)%.o: $(SRCD)%.c 
+	@mkdir -p $(OBJD)
+	$(CC) $(CFLAGS) -I ${HEADD} -Imlx -c -o $@ $<
+
+$(NAME):	${OBJF}
+			make libftmake
+			make libgnlmake
+			make mlx_all
+			$(CC) $(CFLAGS) -L $(MINILIB_D) -lmlx -framework OpenGL -L /usr/X11/lib -lXext -lX11 $(SRCF) ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) -o $(NAME)
+endif
 
 
 all:		${NAME}
@@ -61,6 +75,9 @@ libftmake:
 
 libgnlmake:
 			${LIBGNL_MAKE}
+
+mlx_all:
+			cd $(MINILIB_D) && bash ./configure
 
 clean:
 			${RM} ${OBJD}*.o
