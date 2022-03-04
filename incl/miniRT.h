@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
+# include "../mlx_linux/mlx.h"
 
 # define FT_SP_TYPE 0
 # define FT_CY_TYPE 1
@@ -82,6 +83,20 @@ typedef struct s_geo_object
 	short	color[3];
 }			t_geo_object;
 
+typedef struct	s_canvas {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_canvas;
+
+typedef struct	s_mlx_view {
+	void		*mlx;
+	void		*mlx_win;
+	t_canvas	canvas;
+}				t_mlx_view;
+
 
 /* ft_utils.c */
 
@@ -92,4 +107,11 @@ void	ft_free_split(char **split);
 /* ft_utils_num.c */
 int		ft_digit_check(char *argv);
 int		ft_atoll(const char *str, long long int *out);
+
+/* ft_utils_mlx.c */
+void ft_mlx(t_mlx_view mlx);
+
+/* ft_arg_check.c */
+int line_check(char **line, int last_check);
+int argument_check(int argc, char **argv);
 #endif
