@@ -297,7 +297,9 @@ int line_check(char **line, int last_check)
 	ft_smart_free((void **)&temp);
 	line_split = ft_split(*line, ' ');
 	if (line_split == NULL)
-		return (1);;
+		return (1);
+	if (line_split[0] == NULL)
+		return(0);
 	if (!ft_strcmp(line_split[0], "A") || !ft_strcmp(line_split[0], "L") || !ft_strcmp(line_split[0], "C"))
 		return(main_line_check(line_split, 0));
 	else if (!ft_strcmp(line_split[0], "sp") || !ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy")) /////////////bonus add other shapes
@@ -305,9 +307,10 @@ int line_check(char **line, int last_check)
 	return (1);
 }
 
-int argument_check(int argc, char **argv, int *fd)
+int argument_check(int argc, char **argv)
 {
 	char *line;
+	int fd;
 
 	if (argc != 2)
 	{
@@ -316,38 +319,37 @@ int argument_check(int argc, char **argv, int *fd)
 	}
 	if (file_extension_check(argv[1]) != 0)
 		return (2);
-	*fd = access_check(argv[1]);
-	if (*fd == -1)
+	fd = access_check(argv[1]);
+	if (fd == -1)
 		return (3);
-	line = get_next_line(*fd);
+	line = get_next_line(fd);
 	while (line != NULL)
 	{
 		if (line_check(&line, 0) != 0)
 		{
-			close(*fd);
+			close(fd);
 			ft_smart_free((void **)&line);
 			write(2, "Error: unknown line format1\n", 28);
 			return(4);
 		}
 		ft_smart_free((void **)&line);
-		line = get_next_line(*fd);
+		line = get_next_line(fd);
 	}
+	close(fd);
 	if (line_check(NULL, 1) != 0)
 	{
-		close(*fd);
 		write(2, "Error: unknown line format2\n", 27);
 		return(4);
 	}
 	return (0);
 }
 
-
 int	main(int argc, char **argv)
 {
-	int fd;
 	int error;
-	error = argument_check(argc, argv, &fd);
+
+	error = argument_check(argc, argv);
 	if(error)
 		return (error);
-	//object list builder
+	//error = list_builder
 }
