@@ -15,6 +15,7 @@
 
 # include "../gnl/incl/get_next_line.h"
 # include "../libft/incl/libft.h"
+#include "../libvector/incl/libvector.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -26,10 +27,6 @@
 # define FT_SP_TYPE 0
 # define FT_CY_TYPE 1
 # define FT_PL_TYPE 2
-
-# define FT_FIXED_FRAC_BITS 8
-
-typedef double	t_fixed;
 
 typedef struct s_sphere
 {
@@ -85,10 +82,6 @@ typedef struct s_geo_object
 	short	color[3];
 }			t_geo_object;
 
-void	int2fixed(int in, t_fixed *out);
-void	float2fixed(float in, t_fixed *out);
-void	fixed2int(t_fixed in, int *out);
-void	fixed2float(t_fixed in, float *out);
 
 /* ft_utils.c */
 
