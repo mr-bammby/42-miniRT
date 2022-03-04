@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../incl/miniRT.h"
 
 /**
 	@brief Checks if string is valid number that can be converted.

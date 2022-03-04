@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/04 12:08:08 by dbanfi            #+#    #+#             */
+/*   Updated: 2022/03/04 12:08:08 by dbanfi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -10,6 +22,73 @@
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
+
+# define FT_SP_TYPE 0
+# define FT_CY_TYPE 1
+# define FT_PL_TYPE 2
+
+# define FT_FIXED_FRAC_BITS 8
+
+typedef double	t_fixed;
+
+typedef struct s_sphere
+{
+	t_fixed		diameter;
+	t_fixed		coord[3];
+}			t_sphere;
+
+typedef struct s_plane
+{
+	t_fixed		coord[3];
+	t_fixed		dir_vector[3];
+}			t_plane;
+
+typedef struct s_cylinder
+{
+	t_fixed		coord[3];
+	t_fixed		diameter;
+	t_fixed		height;
+	t_fixed		dir_vector[3];
+}			t_cylinder;
+
+typedef struct s_camera
+{
+	t_fixed		coord[3];
+	t_fixed		dir_vector[3];
+	t_fixed		angle;	////////////////////////////////////////////into radians
+}			t_camera;
+
+typedef struct s_light
+{
+	t_fixed		coord[3];
+	t_fixed		light_ratio;
+}				t_light;
+
+typedef struct s_ambient
+{
+	t_fixed		coord[3];
+	t_fixed		light_ratio;
+	short		color[3];
+}				t_ambient;
+
+typedef struct s_view_object
+{
+	t_camera	camera;
+	t_light		light;
+	t_ambient	ambient;
+}				t_view_object;
+
+typedef struct s_geo_object
+{
+	int		type;
+	void	*strct;
+	short	color[3];
+}			t_geo_object;
+
+void	int2fixed(int in, t_fixed *out);
+void	float2fixed(float in, t_fixed *out);
+void	fixed2int(t_fixed in, int *out);
+void	fixed2float(t_fixed in, float *out);
 
 /* ft_utils.c */
 
