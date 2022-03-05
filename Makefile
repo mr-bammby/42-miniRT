@@ -36,6 +36,14 @@ LIBGNLL		= libgnl.a
 LIBGNL_OBJF    = ${LIBGNLD}${LIBGNL_OBJD}/*.o
 LIBGNL_MAKE    = make -C ${LIBGNLD}
 
+LIBVECTORD		= ./libvector/
+LIBVECTOR_OBJD	= objs
+LIBVECTOR_SRCD	= srcs/
+LIBVECTORL		= libvector.a
+
+LIBVECTOR_OBJF    = ${LIBVECTORD}${LIBVECTOR_OBJD}/*.o
+LIBVECTOR_MAKE    = make -C ${LIBVECTORD}
+
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
@@ -48,8 +56,9 @@ $(OBJD)%.o: $(SRCD)%.c
 $(NAME):	${OBJF}
 			make libftmake
 			make libgnlmake
+			make libvectormake
 			make mlx_all
-			$(CC) $(CFLAGS) $(SRCF) -o $(NAME) ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) -L /usr/local/lib -I /usr/local/include ./mlx_linux/libmlx_Linux.a -L /usr/include/X11/extensions/ -lXext -lX11 -lm
+			$(CC) $(CFLAGS) $(SRCF) -o $(NAME) ${LIBVECTORD}${LIBVECTORL} ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) -L /usr/local/lib -I /usr/local/include ./mlx_linux/libmlx_Linux.a -L /usr/include/X11/extensions/ -lXext -lX11 -lm
 
 endif
 
@@ -63,8 +72,9 @@ $(OBJD)%.o: $(SRCD)%.c
 $(NAME):	${OBJF}
 			make libftmake
 			make libgnlmake
+			make libvectormake
 			make mlx_all
-			$(CC) $(CFLAGS) -L $(MINILIB_D) -lmlx -framework OpenGL -L /usr/X11/lib -lXext -lX11 $(SRCF) ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) -o $(NAME)
+			$(CC) $(CFLAGS) -L $(MINILIB_D) -lmlx -framework OpenGL -L /usr/X11/lib -lXext -lX11 $(SRCF) ${LIBGNLD}${LIBGNLL} $(LIBFTD)$(LIBFTL) ${LIBVECTORD}${LIBVECTORL} -o $(NAME)
 endif
 
 
@@ -76,6 +86,9 @@ libftmake:
 libgnlmake:
 			${LIBGNL_MAKE}
 
+libvectormake:
+			${LIBVECTOR_MAKE}
+
 mlx_all:
 			cd $(MINILIB_D) && bash ./configure
 
@@ -83,11 +96,13 @@ clean:
 			${RM} ${OBJD}*.o
 			make -C ${LIBFTD} clean
 			make -C ${LIBGNLD} clean
+			make -C ${LIBVECTORD} clean
 
 fclean:		clean
 			${RM} ${NAME}
 			${RM} ${LIBFTD}${LIBFTL}
 			${RM} ${LIBGNLD}${LIBGNLL}
+			${RM} ${LIBVECTORD}${LIBVECTORL}
 			@${RM} ${HEADD}miniRT.h.gch
 			@rm -rf miniRT.dSYM
 

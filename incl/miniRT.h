@@ -24,6 +24,7 @@
 # include <math.h>
 # include <string.h>
 # include "../mlx_linux/mlx.h"
+# include "../mlx_mac/include/mlx.h"
 
 # define FT_SP_TYPE 0
 # define FT_CY_TYPE 1

@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 16:53:13 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/04 23:40:03 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/05 01:21:53 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <math.h>
 
-# define FT_FIXED_FRAC_BITS 8
+# define FT_FIXED_FRAC_BITS 16
 
 typedef long long	t_fixed;
 
@@ -36,7 +37,7 @@ typedef struct s_vec
 
 t_fixed	long2fixed(long in);
 t_fixed	double2fixed(double in);
-long	fixed2long(t_fixed in);
+long	fixed2long(t_fixed in); ///////////////////loses everything after decimal point
 double	fixed2double(t_fixed in);
 
 t_vec	ft_creat_vec(t_fixed x, t_fixed y, t_fixed z);
