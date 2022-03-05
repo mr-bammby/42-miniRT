@@ -27,8 +27,10 @@ static void	ft_mlx_display_pixel(t_canvas *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void ft_mlx(t_mlx_view mlx)
+void ft_mlx(void)
 {
+	t_mlx_view	mlx;
+
 	mlx.mlx = mlx_init();
 	mlx.mlx_win = mlx_new_window(mlx.mlx, 500, 500, "miniRT");
 	mlx.canvas.img = mlx_new_image(mlx.mlx, 500, 500);

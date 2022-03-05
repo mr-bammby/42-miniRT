@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fixed_point.c                                   :+:      :+:    :+:   */
+/*   ft_fixed_conversion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 10:52:15 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/04 12:10:58 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/05 01:02:32 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/miniRT.h"
+#include "../incl/libvector.h"
 
-void int2fixed(int in, t_fixed *out)
+t_fixed long2fixed(long in)
 {
-	double temp;
+	t_fixed temp;
 
-	temp = (double)in;
-	out->raw_value = temp << FT_FIXED_FRAC_BITS;
+	temp = (t_fixed)in;
+	return((t_fixed)(temp << FT_FIXED_FRAC_BITS));
 }
 
-void float2fixed(float in, t_fixed *out)
+t_fixed double2fixed(double in)
 {
-	out->raw_value = (double)(roundf(in * (1 << FT_FIXED_FRAC_BITS)));
+	return((t_fixed)(roundf(in * (1 << FT_FIXED_FRAC_BITS))));
 }
 
-void fixed2int(t_fixed in, int *out)
+long fixed2long(t_fixed in)
 {
-	*out = in->raw_value >> FT_FIXED_FRAC_BITS;
+	return((long)(in >> FT_FIXED_FRAC_BITS));
 }
 
-void fixed2float(t_fixed in, float *out);
+double fixed2double(t_fixed in)
 {
-	*out = (float)in->raw_value / (1 << FT_FIXED_FRAC_BITS);
+	return((double)in / (1 << FT_FIXED_FRAC_BITS));
 }
