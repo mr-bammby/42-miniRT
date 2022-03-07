@@ -30,10 +30,19 @@
 # define FT_CY_TYPE 1
 # define FT_PL_TYPE 2
 
+# define FT_MIN_COORD -10000
+# define FT_MAX_COORD 10000
+# define FT_SP_MAX_DIAMETER 1000
+# define FT_CY_MAX_DIAMETER 1000
+# define FT_CY_MAX_HEIGHT 1000
+
+# define PRINT_GOL 1
+# define PRINT_VO 1
+
 typedef struct s_sphere
 {
-	t_fixed		diameter;
 	t_fixed		coord[3];
+	t_fixed		diameter;
 }			t_sphere;
 
 typedef struct s_plane
@@ -45,10 +54,17 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_fixed		coord[3];
+	t_fixed		dir_vector[3];
 	t_fixed		diameter;
 	t_fixed		height;
-	t_fixed		dir_vector[3];
 }			t_cylinder;
+
+typedef struct s_geo_object
+{
+	int		type;
+	void	*s;
+	t_fixed	color[3];
+}			t_geo_object;
 
 typedef struct s_camera
 {
@@ -65,9 +81,8 @@ typedef struct s_light
 
 typedef struct s_ambient
 {
-	t_fixed		coord[3];
 	t_fixed		light_ratio;
-	short		color[3];
+	t_fixed		color[3];
 }				t_ambient;
 
 typedef struct s_view_object
@@ -76,13 +91,6 @@ typedef struct s_view_object
 	t_light		light;
 	t_ambient	ambient;
 }				t_view_object;
-
-typedef struct s_geo_object
-{
-	int		type;
-	void	*strct;
-	short	color[3];
-}			t_geo_object;
 
 typedef struct	s_canvas {
 	void	*img;
@@ -108,6 +116,7 @@ void	ft_free_split(char **split);
 /* ft_utils_num.c */
 int		ft_digit_check(char *argv);
 int		ft_atoll(const char *str, long long int *out);
+int		ft_atod(char *str, double *out);
 
 /* ft_utils_mlx.c */
 void ft_mlx(void);
@@ -115,4 +124,16 @@ void ft_mlx(void);
 /* ft_arg_check.c */
 int line_check(char **line, int last_check);
 int argument_check(int argc, char **argv);
+
+/* ft_list_builder.c */
+int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
+
+/* diagnostics.c */
+void print_gol(t_list *gol);
+void print_vo(t_view_object vo);
+
+/* ft_exit_free.c */
+void ft_exit_free(t_list *gol);
+
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libvector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 16:53:13 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/05 01:21:53 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/07 12:02:17 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <math.h>
 
-# define FT_FIXED_FRAC_BITS 16
+# define FT_FIXED_FRAC_BITS 20
 
 typedef long long	t_fixed;
 

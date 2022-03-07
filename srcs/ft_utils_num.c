@@ -87,3 +87,59 @@ int	ft_atoll(const char *str, long long int *out)
 	*out = k * j;
 	return (0);
 }
+
+static int ft_decimal_engine(char *str, double *out)
+{
+	int				zero_counter;
+	char			*sub_str;
+	unsigned int	sub_str_len;
+	int				decimal;
+	
+	zero_counter = 0;
+	while (str[zero_counter] == '0')
+		zero_counter++;
+	if (zero_counter > 8 || str[zero_counter] == 0)
+		return (0);
+	str = ft_strtrim(str, "0");
+	if (str == NULL)
+		return (1);
+	sub_str_len = 8 - zero_counter;
+	if (ft_strlen(str) < sub_str_len)
+		sub_str_len = ft_strlen(str);
+	sub_str = ft_substr(str, 0, sub_str_len);
+	ft_smart_free((void **)&str);
+	decimal = ft_atoi(sub_str);
+	*out = *out + ((double) decimal / pow(10, zero_counter + sub_str_len));
+	ft_smart_free((void **)&sub_str);
+	return (0);
+}
+
+int	ft_atod(char *str, double *out)
+{
+	char			**split;
+	int				error;
+	long long int	out_ll;
+
+	split = ft_split(str, '.');
+	error = ft_atoll(split[0], &out_ll);
+	if (error)
+	{
+		ft_free_split(split);
+		return (error);
+	}
+	*out = (double) out_ll;
+	if (split[1] != NULL)
+		error = ft_decimal_engine((split[1]), out);
+	if (error)
+	{
+		ft_free_split(split);
+		return (error);
+	}
+	ft_free_split(split);
+	return (0);
+
+
+	
+
+
+}

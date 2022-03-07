@@ -29,19 +29,19 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (NULL);
 	start = 0;
-	end = ft_strlen(s1);
+	end = ft_strlen(s1) - 1 ;
 	while (ft_strchr(set, s1[start]))
 		start++;
-	while (ft_strchr(set, s1[end]) && end > 0)
+	while (end >= 0 && ft_strchr(set, s1[end]))
 		end--;
-	if (end - start > 0)
+	if (end - start >= 0)
 	{
 		dest = ft_calloc((sizeof(char) * (end - start)) + 1 + 1, 1);
 		if (dest == NULL)
 			return (NULL);
 		ft_memcpy(dest, (const void *)(s1 + start), end - start + 1);
 	}
-	else if (end == 0)
+	else if (end == -1)
 		dest = ft_calloc((sizeof(char) * 1), 1);
 	else
 		dest = NULL;
