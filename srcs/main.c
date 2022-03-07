@@ -14,11 +14,15 @@
 
 int	main(int argc, char **argv)
 {
-	int			error;
+	int				error;
+	t_list			*gol;
+	t_view_object	vo;
 
+	gol = NULL;
 	error = argument_check(argc, argv);
 	if(error)
 		return (error);
+	ft_list_builder(argv[1], &gol, &vo);
 	//error = list_builder
 	t_vec vec1;
 	t_vec vec2;
