@@ -36,10 +36,13 @@
 # define FT_CY_MAX_DIAMETER 1000
 # define FT_CY_MAX_HEIGHT 1000
 
+# define PRINT_GOL 1
+# define PRINT_VO 1
+
 typedef struct s_sphere
 {
-	t_fixed		diameter;
 	t_fixed		coord[3];
+	t_fixed		diameter;
 }			t_sphere;
 
 typedef struct s_plane
@@ -51,9 +54,9 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_fixed		coord[3];
+	t_fixed		dir_vector[3];
 	t_fixed		diameter;
 	t_fixed		height;
-	t_fixed		dir_vector[3];
 }			t_cylinder;
 
 typedef struct s_geo_object
@@ -124,6 +127,13 @@ int argument_check(int argc, char **argv);
 
 /* ft_list_builder.c */
 int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
+
+/* diagnostics.c */
+void print_gol(t_list *gol);
+void print_vo(t_view_object vo);
+
+/* ft_exit_free.c */
+void ft_exit_free(t_list *gol);
 
 
 #endif

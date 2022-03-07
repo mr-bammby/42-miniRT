@@ -304,6 +304,7 @@ int line_check(char **line, int last_check)
 		return(main_line_check(line_split, 0));
 	else if (!ft_strcmp(line_split[0], "sp") || !ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy")) /////////////bonus add other shapes
 		return(object_line_check(line_split));
+	ft_free_split(line_split);
 	return (1);
 }
 
