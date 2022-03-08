@@ -122,7 +122,6 @@ int		ft_atod(char *str, double *out);
 void ft_mlx(void);
 
 /* ft_arg_check.c */
-int line_check(char **line, int last_check);
 int argument_check(int argc, char **argv);
 
 /* ft_list_builder.c */
