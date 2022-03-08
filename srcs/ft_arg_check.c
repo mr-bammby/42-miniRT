@@ -282,6 +282,7 @@ static int object_line_check(char **line_split)
 			return (1);
 		return (0);
 	}
+	ft_free_split(line_split);
 	return (1);
 }
 
@@ -292,14 +293,22 @@ int line_check(char **line, int last_check)
 
 	if (last_check == 1)
 		return(main_line_check(NULL, 1));
+	if (line == NULL || *line == NULL)
+		return (1);
 	temp = *line;
-	*line = ft_strtrim(*line, "\n");
-	ft_smart_free((void **)&temp);
+	if (ft_strlen(*line) != 0 && (*line)[ft_strlen(*line) - 1] == '\n')
+	{
+		*line = ft_substr(*line, 0, ft_strlen(*line) - 1);
+		ft_smart_free((void **)&temp);
+	}
 	line_split = ft_split(*line, ' ');
 	if (line_split == NULL)
 		return (1);
 	if (line_split[0] == NULL)
+	{
+		ft_free_split(line_split);
 		return(0);
+	}
 	if (!ft_strcmp(line_split[0], "A") || !ft_strcmp(line_split[0], "L") || !ft_strcmp(line_split[0], "C"))
 		return(main_line_check(line_split, 0));
 	else if (!ft_strcmp(line_split[0], "sp") || !ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy")) /////////////bonus add other shapes
