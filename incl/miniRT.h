@@ -36,25 +36,39 @@
 # define FT_CY_MAX_DIAMETER 1000
 # define FT_CY_MAX_HEIGHT 1000
 
+# define FT_MIN_NORM_VEC -1
+# define FT_MAX_NORM_VEC 1
+
+# define FT_MIN_RGB 0
+# define FT_MAX_RGB 255
+
+# define FT_ASS_VEC 0
+# define FT_ASS_RGB 1
+# define FT_ASS_POINT 2
+
+# define FT_PX_SIZE 0.0001
+# define FT_SCREEN_HOR_PX 500
+# define FT_SCREEN_VER_PX 500
+
 # define PRINT_GOL 1
 # define PRINT_VO 1
 
 typedef struct s_sphere
 {
-	t_fixed		coord[3];
+	t_point		coord;
 	t_fixed		diameter;
 }			t_sphere;
 
 typedef struct s_plane
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
+	t_point		coord;
+	t_vec		dir_vector;
 }			t_plane;
 
 typedef struct s_cylinder
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
+	t_point		coord;
+	t_vec		dir_vector;
 	t_fixed		diameter;
 	t_fixed		height;
 }			t_cylinder;
@@ -68,14 +82,14 @@ typedef struct s_geo_object
 
 typedef struct s_camera
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
-	t_fixed		angle;	////////////////////////////////////////////into radians
+	t_point		coord;
+	t_vec		dir_vector;
+	t_fixed		angle;	////////////////////////////////////////////in radians max angle is 179.9 degree
 }			t_camera;
 
 typedef struct s_light
 {
-	t_fixed		coord[3];
+	t_point		coord;
 	t_fixed		light_ratio;
 }				t_light;
 
@@ -92,6 +106,21 @@ typedef struct s_view_object
 	t_ambient	ambient;
 }				t_view_object;
 
+typedef struct s_ray
+{
+	t_point	source;
+	t_vec	direction;
+}				t_ray;
+
+typedef struct s_screen
+{
+	t_point	camera;
+	t_vec	right;
+	t_vec	down;
+	t_point	zero;
+
+}				t_screen;
+
 typedef struct	s_canvas {
 	void	*img;
 	char	*addr;
@@ -106,6 +135,7 @@ typedef struct	s_mlx_view {
 	t_canvas	canvas;
 }				t_mlx_view;
 
+extern int g_error;
 
 /* ft_utils.c */
 

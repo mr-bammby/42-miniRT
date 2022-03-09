@@ -12,17 +12,20 @@
 
 #include "../incl/miniRT.h"
 
+int g_error;
+
 int	main(int argc, char **argv)
 {
 	int				error;
 	t_list			*gol;
 	t_view_object	vo;
 
+	g_error = 0;
 	gol = NULL;
 	error = argument_check(argc, argv);
 	if(error)
 		return (error);
-	ft_list_builder(argv[1], &gol, &vo);
+	error = ft_list_builder(argv[1], &gol, &vo);
 	//error = list_builder
 /* 	t_vec vec1;
 	t_vec vec2;
@@ -39,6 +42,12 @@ int	main(int argc, char **argv)
 		print_vo(vo);
 	//ft_mlx();
 	ft_exit_free(gol);
+	if (error)
+	{
+		printf ("Builder ERROR\n");
+		return (error);
+	}
+	
 }
 
 

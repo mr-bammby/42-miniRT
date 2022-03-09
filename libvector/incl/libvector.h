@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libvector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 16:53:13 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/07 12:02:17 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:27:11 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # define FT_FIXED_FRAC_BITS 20
 
-typedef long long	t_fixed;
+typedef long long		t_fixed;
 
 typedef struct s_norm_vector
 {
@@ -28,6 +28,8 @@ typedef struct s_norm_vector
 	t_fixed y;
 	t_fixed z;
 }			t_norm_vector;
+
+typedef t_norm_vector	t_point;
 
 typedef struct s_vec
 {
