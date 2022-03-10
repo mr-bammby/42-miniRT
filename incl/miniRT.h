@@ -170,5 +170,8 @@ t_ray ft_ray(t_point source, t_point point);
 /* ft_screen_maker.c */
 t_screen ft_screen_maker(t_camera camera);
 
+/* ft_sphere_distance.c */
+t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray);
+
 
 #endif
