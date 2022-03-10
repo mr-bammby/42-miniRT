@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 16:53:13 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/08 15:27:11 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/10 00:54:10 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ t_vec	ft_add_vec(t_vec vec1, t_vec vec2);
 t_vec	ft_sub_vec(t_vec vec1, t_vec vec2);
 t_fixed	ft_scalar_prod(t_vec vec1, t_vec vec2);
 t_vec	ft_cross_prod_vec(t_vec vec1, t_vec vec2);
+
+int ft_quadratic_solver(t_fixed a, t_fixed b, t_fixed c, t_fixed result[2]);
 
 #endif

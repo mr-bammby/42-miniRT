@@ -2,7 +2,7 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 SRCD		= ./srcs/
-SRC			= ft_fixed_conversion.c ft_add_vec.c ft_sub_vec.c ft_scalar_prod.c ft_cross_prod_vec.c ft_creat_vec.c
+SRC			= ft_fixed_conversion.c ft_add_vec.c ft_sub_vec.c ft_scalar_prod.c ft_cross_prod_vec.c ft_creat_vec.c ft_quadratic_solver.c
 # Command to add the source folder prefix (instead of having it added manually to SRC)
 SRCF		= $(addprefix $(SRCD),$(SRC))
 OBJD		= ./objs/

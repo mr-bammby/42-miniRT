@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:27:42 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/08 21:40:48 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/10 00:10:10 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,4 @@ t_screen ft_screen_maker(t_camera camera)
 	screen.zero.y = fixed2double(screen.camera.y) + fixed2double(sum_vec.n_vec.y) * fixed2double(sum_vec.size);
 	screen.zero.z = fixed2double(screen.camera.z) + fixed2double(sum_vec.n_vec.z) * fixed2double(sum_vec.size);
 	return(screen);
-}
-
-t_ray ft_camera_ray(t_screen screen, int ver_pxint, int hor_px)
-{
-	t_point zero_corner;
-
-	zero_corner = screen.camera 
 }

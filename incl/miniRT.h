@@ -164,5 +164,11 @@ void print_vo(t_view_object vo);
 /* ft_exit_free.c */
 void ft_exit_free(t_list *gol);
 
+/* ft_ray_utils.c */
+t_ray ft_ray(t_point source, t_point point);
+
+/* ft_screen_maker.c */
+t_screen ft_screen_maker(t_camera camera);
+
 
 #endif

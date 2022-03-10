@@ -7,7 +7,8 @@ SRCD		= ./srcs/
 UNAME = $(shell uname)
 #echo $(UNAME)
 
-SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx.c ft_arg_check.c ft_list_builder.c diagnostics.c ft_exit_free.c ft_screen_maker.c
+SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx.c ft_arg_check.c ft_list_builder.c diagnostics.c ft_exit_free.c ft_screen_maker.c \
+				ft_ray_utils.c
 
 # Command to add the source folder prefix (instead of having it added manually to SRC)
 SRCF		= $(addprefix $(SRCD),$(SRC))
