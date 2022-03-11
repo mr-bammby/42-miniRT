@@ -44,6 +44,8 @@ int ft_get_pixel(int x, int y, t_screen screen, t_list *gol, t_view_object vo)
 			temp = ft_sphere_distance(*(((t_sphere *)(((t_geo_object *)(gol->content))->s))), ray);
 		else if (((t_geo_object *)(gol->content))->type == FT_PL_TYPE)
 			temp = ft_plane_distance(*(((t_plane *)(((t_geo_object *)(gol->content))->s))), ray);
+		else if (((t_geo_object *)(gol->content))->type == FT_CY_TYPE)
+			temp = ft_cylinder_distance(*(((t_cylinder *)(((t_geo_object *)(gol->content))->s))), ray);
 		if (fixed2double(temp) > 0 && fixed2double(temp) < fixed2double(distance))
 		{
 			distance = temp;

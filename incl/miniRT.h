@@ -171,6 +171,9 @@ t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray);
 /* ft_plane_distance.c */
 t_fixed ft_plane_distance(t_plane plane, t_ray ray);
 
+/* ft_cylinder_distance.c */
+t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray);
+
 /* ft_light_stuff.c */
 int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
 

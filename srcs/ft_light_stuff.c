@@ -6,7 +6,7 @@
 /*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/12 20:48:34 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/13 21:47:59 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_li
 			dist = ft_sphere_distance(*(((t_sphere *)(((t_geo_object *)(gol->content))->s))), ray);
 		else if (((t_geo_object *)(gol->content))->type == FT_PL_TYPE)
 			dist = ft_plane_distance(*(((t_plane *)(((t_geo_object *)(gol->content))->s))), ray);
+		else if (((t_geo_object *)(gol->content))->type == FT_CY_TYPE)
+			dist = ft_cylinder_distance(*(((t_cylinder *)(((t_geo_object *)(gol->content))->s))), ray);
 		if (fixed2double(dist) > 0 && (fixed2double(dist) - fixed2double(view_point_dist)) < -0.001)
 			return (ft_apply_light(object, out_norm_rgb));
 		gol = gol->next;
