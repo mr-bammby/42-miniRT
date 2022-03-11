@@ -58,3 +58,13 @@ void	ft_free_split(char **split)
 	}
 	free(split);
 }
+
+int	ft_rgb2int(t_fixed rgb[3])
+{
+	int	out;
+
+	out = (fixed2long(rgb[0]) << 16) + (fixed2long(rgb[1]) << 8) + \
+		fixed2long(rgb[2]);
+	return (out);
+}
+

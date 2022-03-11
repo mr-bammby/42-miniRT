@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	int				error;
 	t_list			*gol;
 	t_view_object	vo;
+	t_screen		screen;
 
 	g_error = 0;
 	gol = NULL;
@@ -40,8 +41,11 @@ int	main(int argc, char **argv)
 		print_gol(gol);
 	if (PRINT_VO)
 		print_vo(vo);
-	//ft_mlx();
+	screen = ft_screen_maker(vo.camera);
+	ft_mlx(screen, gol);
 	ft_exit_free(gol);
+
+	
 	if (error)
 	{
 		printf ("Builder ERROR\n");

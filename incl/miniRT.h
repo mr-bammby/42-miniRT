@@ -142,6 +142,7 @@ extern int g_error;
 int		ft_strcmp(char *s1, char *s2);
 void	ft_smart_free(void **ptr);
 void	ft_free_split(char **split);
+int		ft_rgb2int(t_fixed rgb[3]);
 
 /* ft_utils_num.c */
 int		ft_digit_check(char *argv);
@@ -149,7 +150,7 @@ int		ft_atoll(const char *str, long long int *out);
 int		ft_atod(char *str, double *out);
 
 /* ft_utils_mlx.c */
-void ft_mlx(void);
+void ft_mlx(t_screen screen, t_list *gol);
 
 /* ft_arg_check.c */
 int argument_check(int argc, char **argv);
@@ -169,6 +170,7 @@ t_ray ft_ray(t_point source, t_point point);
 
 /* ft_screen_maker.c */
 t_screen ft_screen_maker(t_camera camera);
+t_ray ft_screen_ray(t_screen screen, int x, int y);
 
 /* ft_sphere_distance.c */
 t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray);

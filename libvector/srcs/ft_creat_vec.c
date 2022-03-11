@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 22:34:21 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/05 01:59:49 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/11 01:04:06 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_vec	ft_creat_vec(t_fixed x, t_fixed y, t_fixed z)
 	t_vec out;
 
 	distance = sqrt(pow(fixed2double(x), 2) + pow(fixed2double(y), 2)+ pow(fixed2double(z), 2));
-	printf("distance %f\n", fixed2double(distance));
 	out.size = double2fixed(distance);
 	if(distance < 0.0000001)
 	{
