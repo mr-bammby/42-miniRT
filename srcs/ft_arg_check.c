@@ -291,10 +291,8 @@ int line_check(char **line, int last_check)
 	char		**line_split;
 	char		*temp;
 
-	printf("Test 1\n");
 	if (last_check == 1)
 		return(main_line_check(NULL, 1));
-	printf("Test 2\n");
 	if (line == NULL || *line == NULL)
 		return (1);
 	temp = *line;
@@ -304,28 +302,17 @@ int line_check(char **line, int last_check)
 		ft_smart_free((void **)&temp);
 	}
 	line_split = ft_split(*line, ' ');
-	printf("Test 3\n");
 	if (line_split == NULL)
 		return (1);
-	printf("Test 4\n");
 	if (line_split[0] == NULL)
 	{
 		ft_free_split(line_split);
 		return(0);
 	}
-	printf("Test 5\n");
 	if (!ft_strcmp(line_split[0], "A") || !ft_strcmp(line_split[0], "L") || !ft_strcmp(line_split[0], "C"))
-	{
-		printf("Type: %s\n", line_split[0]);
 		return(main_line_check(line_split, 0));
-	}
 	else if (!ft_strcmp(line_split[0], "sp") || !ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy")) /////////////bonus add other shapes
-	{
-		printf("Type: %s\n", line_split[0]);
 		return(object_line_check(line_split));
-	}
-	printf("Type II: %s\n", line_split[0]);
-	printf("Test 6\n");
 	ft_free_split(line_split);
 	return (1);
 }
