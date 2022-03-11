@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_light_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/12 16:02:31 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/12 20:48:34 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,17 @@ void ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, t_geo_obje
 	if (object.type == FT_SP_TYPE)
 		surface_vec = ft_creat_vec(double2fixed(fixed2double(point.x) - fixed2double(((t_sphere *)(object.s))->coord.x)), \
 		double2fixed(fixed2double(point.y) - fixed2double(((t_sphere *)(object.s))->coord.y)), double2fixed(fixed2double(point.z) - fixed2double(((t_sphere *)(object.s))->coord.z)));
+	else if (object.type == FT_PL_TYPE)
+		surface_vec = ((t_plane *)(object.s))->dir_vector;
 	else
 		surface_vec = ft_creat_vec(0, 0, 0);
 	surface_vec.size = long2fixed(1);
 	light_vec_inv.size = long2fixed(1);
 	scal_prod = ft_scalar_prod(light_vec_inv, surface_vec);
-	if (fixed2double(scal_prod) <= 0)
+	if (object.type != FT_PL_TYPE && fixed2double(scal_prod) <= 0)
 		return ;
+	else
+		scal_prod = double2fixed(fabs(fixed2double(scal_prod)));
 	rgb[0] = double2fixed(fixed2double(rgb[0]) + (fixed2double(scal_prod) * fixed2double(light.light_ratio)));
 	rgb[1] = double2fixed(fixed2double(rgb[1]) + (fixed2double(scal_prod) * fixed2double(light.light_ratio)));
 	rgb[2] = double2fixed(fixed2double(rgb[2]) + (fixed2double(scal_prod) * fixed2double(light.light_ratio)));
@@ -75,11 +79,11 @@ int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_li
 	while (gol != NULL)
 	{
 		if (((t_geo_object *)(gol->content))->type == FT_SP_TYPE)
-		{
 			dist = ft_sphere_distance(*(((t_sphere *)(((t_geo_object *)(gol->content))->s))), ray);
-			if (fixed2double(dist) > 0 && (fixed2double(dist) - fixed2double(view_point_dist)) < -0.001)
-				return (ft_apply_light(object, out_norm_rgb));
-		}
+		else if (((t_geo_object *)(gol->content))->type == FT_PL_TYPE)
+			dist = ft_plane_distance(*(((t_plane *)(((t_geo_object *)(gol->content))->s))), ray);
+		if (fixed2double(dist) > 0 && (fixed2double(dist) - fixed2double(view_point_dist)) < -0.001)
+			return (ft_apply_light(object, out_norm_rgb));
 		gol = gol->next;
 	}
 	ft_calc_diff_light(out_norm_rgb, vo.light, point, object);
