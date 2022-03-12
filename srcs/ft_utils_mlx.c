@@ -27,26 +27,35 @@ static void	ft_mlx_display_pixel(t_canvas *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int ft_get_pixel(int x, int y, t_screen screen, t_list *gol)
+int ft_get_pixel(int x, int y, t_screen screen, t_list *gol, t_view_object vo)
 {
 	t_ray ray;
-
+	t_fixed distance;
+	t_geo_object object;
+	t_fixed temp;
+	t_list *temp_l;
+	
+	temp_l = gol;
 	ray = ft_screen_ray(screen, x, y);
+	distance = long2fixed(FT_BIGGEST_DIST);
 	while (gol != NULL)
 	{
 		if (((t_geo_object *)(gol->content))->type == FT_SP_TYPE)
+			temp = ft_sphere_distance(*(((t_sphere *)(((t_geo_object *)(gol->content))->s))), ray);
+		if (fixed2double(temp) > 0 && fixed2double(temp) < fixed2double(distance))
 		{
-			if (fixed2long(ft_sphere_distance(*(((t_sphere *)(((t_geo_object *)(gol->content))->s))), ray)) > 0)
-				return (ft_rgb2int(((t_geo_object *)(gol->content))->color));
-			else
-				return (0);
+			distance = temp;
+			object = *((t_geo_object *)(gol->content));
 		}
 		gol = gol->next;
 	}
-	return (0);
+	if (fixed2long(distance) != FT_BIGGEST_DIST)
+		return(ft_calc_all_light(ft_point_on_ray(ray, distance), object, vo, temp_l));
+
+	return (0); 
 }
 
-void ft_mlx(t_screen screen, t_list *gol)
+void ft_mlx(t_screen screen, t_list *gol, t_view_object vo)
 {
 	t_mlx_view	mlx;
 	int x;
@@ -63,7 +72,7 @@ void ft_mlx(t_screen screen, t_list *gol)
 		x = 0;
 		while (x < FT_SCREEN_HOR_PX)
 		{
-			ft_mlx_display_pixel(&mlx.canvas, x, y, ft_get_pixel(x, y, screen, gol)); // x y can be in array
+			ft_mlx_display_pixel(&mlx.canvas, x, y, ft_get_pixel(x, y, screen, gol, vo)); // x y can be in array
 			x++;
 		}
 		y++;
