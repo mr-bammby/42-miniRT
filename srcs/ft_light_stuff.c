@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/12 01:49:33 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/12 16:02:31 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,19 @@
 int ft_apply_light(t_geo_object obj, t_fixed light_norm_rgb[3])
 {
 	int out;
-
-	out = ((int)(255 * ((fixed2double(obj.color[0]) / 255.0) * fixed2double(light_norm_rgb[0])))) << 16;
-	out = out + (((int)(255 * ((fixed2double(obj.color[1]) / 255.0) * fixed2double(light_norm_rgb[1])))) << 8);
-	out = out + ((int)(255 * ((fixed2double(obj.color[2]) / 255.0) * fixed2double(light_norm_rgb[2]))));
+	int temp;
+	temp = ((int)(255 * ((fixed2double(obj.color[0]) / 255.0) * fixed2double(light_norm_rgb[0]))));
+	if (temp > 255)
+		temp = 255;
+	out = temp << 16;
+	temp = ((int)(255 * ((fixed2double(obj.color[1]) / 255.0) * fixed2double(light_norm_rgb[1]))));
+	if (temp > 255)
+		temp = 255;
+	out = out + (temp << 8);
+	temp = ((int)(255 * ((fixed2double(obj.color[2]) / 255.0) * fixed2double(light_norm_rgb[2]))));
+	if (temp > 255)
+		temp = 255;
+	out = out + temp;
 	return (out);
 }
 
