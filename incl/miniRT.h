@@ -15,7 +15,7 @@
 
 # include "../gnl/incl/get_next_line.h"
 # include "../libft/incl/libft.h"
-#include "../libvector/incl/libvector.h"
+# include "../libvector/incl/libvector.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -30,31 +30,46 @@
 # define FT_CY_TYPE 1
 # define FT_PL_TYPE 2
 
-# define FT_MIN_COORD -10000
 # define FT_MAX_COORD 10000
+# define FT_MIN_COORD -FT_MAX_COORD
+# define FT_BIGGEST_DIST 3 * FT_MAX_COORD
 # define FT_SP_MAX_DIAMETER 1000
 # define FT_CY_MAX_DIAMETER 1000
 # define FT_CY_MAX_HEIGHT 1000
+
+# define FT_MIN_NORM_VEC -1
+# define FT_MAX_NORM_VEC 1
+
+# define FT_MIN_RGB 0
+# define FT_MAX_RGB 255
+
+# define FT_ASS_VEC 0
+# define FT_ASS_RGB 1
+# define FT_ASS_POINT 2
+
+# define FT_PX_SIZE 0.00001
+# define FT_SCREEN_HOR_PX 1000
+# define FT_SCREEN_VER_PX 1000
 
 # define PRINT_GOL 1
 # define PRINT_VO 1
 
 typedef struct s_sphere
 {
-	t_fixed		coord[3];
+	t_point		coord;
 	t_fixed		diameter;
 }			t_sphere;
 
 typedef struct s_plane
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
+	t_point		coord;
+	t_vec		dir_vector;
 }			t_plane;
 
 typedef struct s_cylinder
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
+	t_point		coord;
+	t_vec		dir_vector;
 	t_fixed		diameter;
 	t_fixed		height;
 }			t_cylinder;
@@ -68,14 +83,14 @@ typedef struct s_geo_object
 
 typedef struct s_camera
 {
-	t_fixed		coord[3];
-	t_fixed		dir_vector[3];
-	t_fixed		angle;	////////////////////////////////////////////into radians
+	t_point		coord;
+	t_vec		dir_vector;
+	t_fixed		angle;	////////////////////////////////////////////in radians max angle is 179.9 degree
 }			t_camera;
 
 typedef struct s_light
 {
-	t_fixed		coord[3];
+	t_point		coord;
 	t_fixed		light_ratio;
 }				t_light;
 
@@ -92,6 +107,15 @@ typedef struct s_view_object
 	t_ambient	ambient;
 }				t_view_object;
 
+typedef struct s_screen
+{
+	t_point	camera;
+	t_vec	right;
+	t_vec	down;
+	t_point	zero;
+
+}				t_screen;
+
 typedef struct	s_canvas {
 	void	*img;
 	char	*addr;
@@ -106,6 +130,9 @@ typedef struct	s_mlx_view {
 	t_canvas	canvas;
 }				t_mlx_view;
 
+typedef t_fixed t_rgb[3];
+
+extern int g_error;
 
 /* ft_utils.c */
 
@@ -119,7 +146,7 @@ int		ft_atoll(const char *str, long long int *out);
 int		ft_atod(char *str, double *out);
 
 /* ft_utils_mlx.c */
-void ft_mlx(void);
+void ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
 int argument_check(int argc, char **argv);
@@ -134,5 +161,14 @@ void print_vo(t_view_object vo);
 /* ft_exit_free.c */
 void ft_exit_free(t_list *gol);
 
+/* ft_screen_maker.c */
+t_screen ft_screen_maker(t_camera camera);
+t_ray ft_screen_ray(t_screen screen, int x, int y);
+
+/* ft_sphere_distance.c */
+t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray);
+
+/* ft_light_stuff.c */
+int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
 
 #endif
