@@ -47,7 +47,7 @@
 # define FT_ASS_RGB 1
 # define FT_ASS_POINT 2
 
-# define FT_PX_SIZE 0.00001
+# define FT_PX_SIZE 0.000001
 # define FT_SCREEN_HOR_PX 1000
 # define FT_SCREEN_VER_PX 1000
 
