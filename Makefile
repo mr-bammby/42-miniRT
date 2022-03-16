@@ -1,5 +1,5 @@
 CC			= gcc
-CFLAGS		= -g3 #-Wall -Wextra -Werror
+CFLAGS		= -g3 -Wall -Wextra -Werror
 RM			= rm -f
 SRCD		= ./srcs/
 
