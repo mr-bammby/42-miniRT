@@ -26,12 +26,20 @@ int	ft_digit_check(char *argv)
 	i = 0;
 	num_flag = 0;
 	while (argv[i])
-	{
+	{	
 		if (ft_isdigit(argv[i]) != 0)
 			num_flag = 1;
-		else if (argv[i] == '-' && i != 0)
-			return (1);
-		else if (argv[i] == '.' && num_flag == 0)
+		else if (argv[i] == '-')
+		{
+			if	(i != 0)
+				return (1);
+		}
+		else if (argv[i] == '.')
+		{
+			if (num_flag == 0)
+				return (1);
+		}
+		else
 			return (1);
 		i++;
 	}

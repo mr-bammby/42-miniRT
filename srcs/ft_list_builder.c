@@ -308,6 +308,8 @@ static int	ft_create_gol(char **split, t_list **gol)
 		error = ft_create_plane_builder(&(go->s), split);
 		if (error)
 		{
+			if (go->s)
+				ft_smart_free((void **)&(go->s));
 			ft_smart_free((void **)&go);
 			return (error);
 		}
@@ -332,12 +334,17 @@ static int	ft_create_gol(char **split, t_list **gol)
 	error = ft_value_assignemnt((void *)&(go->color), sub_split, FT_ASS_RGB);
 	ft_free_split(sub_split);
 	if (error)
+	{
+		if (go->s)
+			ft_smart_free((void **)&(go->s));
+		ft_smart_free((void **)&go);
 		return(error);
+	}
 	ft_lstadd_back(gol, ft_lstnew((void *)go));
 	return (0);
 }
 
-int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
+void	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
 {
 	int		fd;
 	char	*line;
@@ -349,20 +356,28 @@ int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
 	{
 		split = ft_split(line, ' ');
 		if (split == NULL)
-			return (1);
+		{
+			ft_exit_free(*gol);
+			ft_exit_on_arg_error(FT_ERR_UNKNOWN, split, fd, line);
+		}
+		//	return (1);
 		if (ft_strcmp(split[0], "\n"))
 		{
-			if(ft_strlen(split[0]) == 1)
+			if (ft_strlen(split[0]) == 1)
 				error = ft_fill_vo(split, vo);
 			else
 				error = ft_create_gol(split, gol);
 			if (error != 0)
-				return (error);
+			{
+				ft_exit_free(*gol);
+				ft_exit_on_arg_error(FT_ERR_UNKNOWN, split, fd, line);
+				//return (error);
+			}
 		}
 		ft_free_split(split);
 		ft_smart_free((void **)&line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (0);
+	//return (0);
 }

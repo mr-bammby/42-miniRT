@@ -57,6 +57,24 @@
 #define FT_RADIUS_CHECK 1
 #define FT_NO_RADIUS_CHECK 0
 
+#define FT_EXIT_ON_ERROR 1
+
+# define FT_ERR_ARG_NUM		"wrong number of arguments\n"
+# define FT_ERR_FILE_NAME	"unsupported file name\n"
+# define FT_ERR_FILE_ACCESS	"file not accessible\n"
+# define FT_ERR_UNKNOWN		"bad line read\n"
+# define FT_ERR_UNKNOWN_OBJ	"unknown object\n"
+# define FT_ERR_C_LESS		"no camera object\n"
+# define FT_ERR_C_MANY		"too many camera objects\n"
+# define FT_ERR_C_ARG_CHECK	"wrong camera arguments\n"
+# define FT_ERR_A_MANY		"too many ambient light objects\n"
+# define FT_ERR_A_ARG_CHECK	"wrong ambient light arguments\n"
+# define FT_ERR_L_MANY		"too many light objects\n"
+# define FT_ERR_L_ARG_CHECK	"wrong light arguments\n"
+# define FT_ERR_SP_ARG_CHECK	"wrong sphere arguments\n"
+# define FT_ERR_PL_ARG_CHECK	"wrong plane arguments\n"
+# define FT_ERR_CY_ARG_CHECK	"wrong cylinder arguments\n"
+
 typedef struct s_geo_object
 {
 	int		type;
@@ -132,10 +150,10 @@ int		ft_atod(char *str, double *out);
 void ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
-int argument_check(int argc, char **argv);
+void ft_argument_check(int argc, char **argv);
 
 /* ft_list_builder.c */
-int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
+void	ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
 
 /* diagnostics.c */
 void print_gol(t_list *gol);
@@ -143,6 +161,7 @@ void print_vo(t_view_object vo);
 
 /* ft_exit_free.c */
 void ft_exit_free(t_list *gol);
+void ft_exit_on_arg_error(char *msg, char **split, int fd, char *line);
 
 /* ft_screen_maker.c */
 t_screen ft_screen_maker(t_camera camera);

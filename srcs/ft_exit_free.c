@@ -24,3 +24,27 @@ void ft_exit_free(t_list *gol)
 		ft_lstclear(&gol, del_gol);
 	ft_smart_free((void **)(&gol));
 }
+
+void ft_exit_on_arg_error(char *msg, char **split, int fd, char *line)
+{
+	write(2, "Error: ", 7);
+	write(2, msg, ft_strlen(msg));
+	if (split)
+		ft_free_split(split);
+	if (fd != -1)
+		close(fd);
+	ft_smart_free((void **)&line);
+	exit(FT_EXIT_ON_ERROR);
+}
+
+void ft_exit_on_built_error(char *msg, char **split, int fd, char *line)
+{
+	write(2, "Error: ", 7);
+	write(2, msg, ft_strlen(msg));
+	if (split)
+		ft_free_split(split);
+	if (fd != -1)
+		close(fd);
+	ft_smart_free((void **)&line);
+	exit(FT_EXIT_ON_ERROR);
+}
