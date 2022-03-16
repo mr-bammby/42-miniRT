@@ -178,7 +178,7 @@ static int ft_create_sphere(void **s, char **split)
 	return (0);
 }
 
-static int ft_create_plane(void **s, char **split)
+static int ft_create_plane_builder(void **s, char **split)
 {
 	char		**sub_split;
 	int			error;
@@ -305,7 +305,7 @@ static int	ft_create_gol(char **split, t_list **gol)
 		if (go == NULL)
 			return (1);
 		go->type = FT_PL_TYPE;
-		error = ft_create_plane(&(go->s), split);
+		error = ft_create_plane_builder(&(go->s), split);
 		if (error)
 		{
 			ft_smart_free((void **)&go);

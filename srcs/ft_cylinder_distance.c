@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cylinder_distance.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 01:15:54 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/13 20:52:42 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/16 01:19:41 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray)
 	t_fixed	a;
 	t_fixed	b;
 	t_fixed	c;
+	t_fixed	t[2];
+	t_fixed scalar;
 	t_fixed	result[2];
 	int		result_num;
 
@@ -72,9 +74,41 @@ t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray)
 	result_num = ft_quadratic_solver(a, b, c, result);
 	if (result_num == 0)
 		return (long2fixed(-1));
-	else if (result_num == 1)
+	t[0] = ft_point_height_loc(cylinder, ft_point_on_ray(ray, result[0]));
+	if (result_num == 1)
+	{
+		if ((fixed2double(t[0]) <= (fixed2double(cylinder.height)/2)) && (fixed2double(t[0]) >= (-fixed2double(cylinder.height)/2)))
+			return (result[0]);
+		return (long2fixed(-1));
+	}
+	t[1] = ft_point_height_loc(cylinder, ft_point_on_ray(ray, result[1]));
+	scalar = ft_scalar_prod(ray.direction, cylinder.dir_vector);
+	if (((fabs(fixed2double(scalar)) - 1.0) < 0.000001) && ((fabs(fixed2double(scalar)) - 1.0) > -0.000001)) //case 1
+	{
+		return(ft_dist2disc(cylinder,ray, scalar, FT_RADIUS_CHECK));;
+	}
+	else if(((fixed2double(t[0]) > fixed2double(cylinder.height)/2) && (fixed2double(t[1]) < -fixed2double(cylinder.height)/2)) || ((fixed2double(t[1]) > fixed2double(cylinder.height)/2) && (fixed2double(t[0]) < -fixed2double(cylinder.height)/2))) //case 4
+		return(ft_dist2disc(cylinder,ray, scalar, FT_NO_RADIUS_CHECK));
+	else if(((fixed2double(t[0]) > fixed2double(cylinder.height)/2) && (fixed2double(t[1]) > fixed2double(cylinder.height)/2)) || ((fixed2double(t[0]) < -fixed2double(cylinder.height)/2) && (fixed2double(t[1]) < -fixed2double(cylinder.height)/2))) //case 2
+		return (long2fixed(-1));
+	else if(((fixed2double(t[0]) <= fixed2double(cylinder.height)/2) && (fixed2double(t[0]) >= -fixed2double(cylinder.height)/2)) && ((fixed2double(t[1]) <= fixed2double(cylinder.height)/2) && (fixed2double(t[1]) >= -fixed2double(cylinder.height)/2))) //case 3
+	{
+		if (fixed2double(result[0]) > fixed2double(result[1]))
+			return (result[1]);
 		return (result[0]);
-	if (result[0] > result[1])
-		return (result[1]);
-	return (result[0]);
+	}
+	else
+	{
+		if ((fixed2double(t[0]) <= fixed2double(cylinder.height)/2) && (fixed2double(t[0]) >= -fixed2double(cylinder.height)/2))
+			result[1] = ft_dist2disc(cylinder,ray , scalar, FT_RADIUS_CHECK);
+		else
+			result[0] = ft_dist2disc(cylinder,ray, scalar, FT_RADIUS_CHECK);
+		if(fixed2double(result[0]) < 0)
+			return (result[1]);
+		else if(fixed2double(result[1]) < 0)
+			return (result[0]);
+		if (fixed2double(result[0]) > fixed2double(result[1]))
+			return (result[1]);
+		return (result[0]);
+	}
 }

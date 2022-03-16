@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_plane_distance.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 01:15:54 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/12 20:28:41 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/16 01:11:31 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_fixed ft_plane_distance(t_plane plane, t_ray ray)
 	t_vec vec_ray_point;
 	t_fixed intersection_check;
 	t_fixed parallel_check;
-	t_fixed result;
 
 	vec_ray_point = ft_creat_vec(double2fixed(fixed2double(plane.coord.x) - fixed2double(ray.source.x)), \
 		double2fixed(fixed2double(plane.coord.y) - fixed2double(ray.source.y)), double2fixed(fixed2double(plane.coord.z) - fixed2double(ray.source.z)));

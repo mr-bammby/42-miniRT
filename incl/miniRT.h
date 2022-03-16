@@ -47,32 +47,15 @@
 # define FT_ASS_RGB 1
 # define FT_ASS_POINT 2
 
-# define FT_PX_SIZE 0.000001
+# define FT_PX_SIZE 0.001
 # define FT_SCREEN_HOR_PX 1000
 # define FT_SCREEN_VER_PX 1000
 
 # define PRINT_GOL 1
 # define PRINT_VO 1
 
-typedef struct s_sphere
-{
-	t_point		coord;
-	t_fixed		diameter;
-}			t_sphere;
-
-typedef struct s_plane
-{
-	t_point		coord;
-	t_vec		dir_vector;
-}			t_plane;
-
-typedef struct s_cylinder
-{
-	t_point		coord;
-	t_vec		dir_vector;
-	t_fixed		diameter;
-	t_fixed		height;
-}			t_cylinder;
+#define FT_RADIUS_CHECK 1
+#define FT_NO_RADIUS_CHECK 0
 
 typedef struct s_geo_object
 {
@@ -176,5 +159,9 @@ t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray);
 
 /* ft_light_stuff.c */
 int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
+
+/* ft_cylinder_utils.c */
+t_fixed ft_point_height_loc(t_cylinder cylinder, t_point point);
+t_fixed ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
 
 #endif

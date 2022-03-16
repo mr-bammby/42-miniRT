@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/14 21:33:52 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/16 01:56:35 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,10 @@ t_point ft_closest_point_on_axis(t_cylinder cylinder, t_point point)
 	t_fixed t;
 	t_point out;
 
-	t = double2fixed((fixed2double(cylinder.dir_vector.n_vec.x) * (fixed2double(point.x) - fixed2double(cylinder.coord.x))) + \
-		(fixed2double(cylinder.dir_vector.n_vec.y) * (fixed2double(point.y) - fixed2double(cylinder.coord.y))) + \
-		(fixed2double(cylinder.dir_vector.n_vec.z) * (fixed2double(point.z) - fixed2double(cylinder.coord.z))));
+	t = ft_point_height_loc(cylinder, point);
 	out.x = double2fixed(fixed2double(cylinder.coord.x) + (fixed2double(t) * fixed2double(cylinder.dir_vector.n_vec.x)));
 	out.y = double2fixed(fixed2double(cylinder.coord.y) + (fixed2double(t) * fixed2double(cylinder.dir_vector.n_vec.y)));
 	out.z = double2fixed(fixed2double(cylinder.coord.z) + (fixed2double(t) * fixed2double(cylinder.dir_vector.n_vec.z)));
-	printf("point on axis %f, %f, %f\n", fixed2double(out.x), fixed2double(out.y), fixed2double(out.z));
 	return (out);
 	
 }
@@ -60,6 +57,7 @@ void ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, t_geo_obje
 	t_vec surface_vec;
 	t_fixed scal_prod;
 	t_point cylinder_helper;
+	t_fixed cy_height;
 
 	light_vec_inv = ft_creat_vec(double2fixed(fixed2double(light.coord.x) - fixed2double(point.x)), \
 		double2fixed(fixed2double(light.coord.y) - fixed2double(point.y)), double2fixed(fixed2double(light.coord.z) - fixed2double(point.z)));
@@ -70,8 +68,16 @@ void ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, t_geo_obje
 		surface_vec = ((t_plane *)(object.s))->dir_vector;
 	else if (object.type == FT_CY_TYPE)
 	{
-		cylinder_helper = ft_closest_point_on_axis(*((t_cylinder *)(object.s)), point);
-		surface_vec = ft_creat_vec(double2fixed(fixed2double(point.x) - fixed2double(cylinder_helper.x)), double2fixed(fixed2double(point.y) - fixed2double(cylinder_helper.y)), double2fixed(fixed2double(point.z) - fixed2double(cylinder_helper.z)));
+		cy_height = ft_point_height_loc(*((t_cylinder *)(object.s)), point);
+		if (fabs(fixed2double(cy_height) - fixed2double(((t_cylinder *)(object.s))->height) / 2) < 0.0001)
+			surface_vec = ((t_cylinder *)(object.s))->dir_vector;
+		else if (fabs(fixed2double(cy_height) + fixed2double(((t_cylinder *)(object.s))->height) / 2) < 0.0001)
+			surface_vec = ft_rev_vec(((t_cylinder *)(object.s))->dir_vector);
+		else
+		{
+			cylinder_helper = ft_closest_point_on_axis(*((t_cylinder *)(object.s)), point);
+			surface_vec = ft_creat_vec(double2fixed(fixed2double(point.x) - fixed2double(cylinder_helper.x)), double2fixed(fixed2double(point.y) - fixed2double(cylinder_helper.y)), double2fixed(fixed2double(point.z) - fixed2double(cylinder_helper.z)));
+		}
 	}
 	else
 		surface_vec = ft_creat_vec(0, 0, 0);
@@ -93,7 +99,6 @@ int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_li
 	t_ray ray;
 	t_fixed view_point_dist;
 	t_fixed dist;
-	int temp;
 
 	ft_calc_ambient(out_norm_rgb, vo.ambient);
 	ray = ft_create_ray(vo.light.coord, point);

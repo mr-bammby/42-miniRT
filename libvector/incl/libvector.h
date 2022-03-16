@@ -43,6 +43,26 @@ typedef struct s_ray
 	t_vec	direction;
 }				t_ray;
 
+typedef struct s_sphere
+{
+	t_point		coord;
+	t_fixed		diameter;
+}			t_sphere;
+
+typedef struct s_plane
+{
+	t_point		coord;
+	t_vec		dir_vector;
+}			t_plane;
+
+typedef struct s_cylinder
+{
+	t_point		coord;
+	t_vec		dir_vector;
+	t_fixed		diameter;
+	t_fixed		height;
+}			t_cylinder;
+
 extern int g_error;
 
 t_fixed	long2fixed(long in);
@@ -61,5 +81,10 @@ int ft_quadratic_solver(t_fixed a, t_fixed b, t_fixed c, t_fixed result[2]);
 t_ray ft_create_ray(t_point source, t_point point);
 t_fixed ft_points_dist(t_point a, t_point b);
 t_point	ft_point_on_ray(t_ray ray, t_fixed distance);
+
+t_fixed ft_parallel_line_dist(t_point point1, t_point point2, t_vec dir_vec);
+t_vec	ft_rev_vec(t_vec vec);
+t_plane ft_create_plane(t_point point, t_norm_vector n_vec);
+
 
 #endif
