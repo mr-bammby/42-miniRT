@@ -35,13 +35,12 @@ int	main(int argc, char **argv)
 	screen = ft_screen_maker(vo.camera);
 	ft_mlx(screen, gol, vo);
 	ft_exit_free(gol);
-
-	
 	if (error)
 	{
 		printf ("Builder ERROR\n");
 		return (error);
 	}
+	return(0);
 	
 }
 
