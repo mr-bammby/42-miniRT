@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sphere_distance.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 01:15:54 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/12 02:33:21 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/18 18:01:01 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray)
 	t_fixed result[2];
 	int		result_num;
 
-	a = double2fixed(pow(fixed2double(ray.direction.n_vec.x), 2) + \
-		pow(fixed2double(ray.direction.n_vec.y), 2) + \
-		pow(fixed2double(ray.direction.n_vec.z), 2));
-	b = double2fixed(2 * (((fixed2double(ray.source.x) - \
-		fixed2double(sphere.coord.x)) * fixed2double(ray.direction.n_vec.x)) + \
-		((fixed2double(ray.source.y) - fixed2double(sphere.coord.y)) * \
-		fixed2double(ray.direction.n_vec.y)) + ((fixed2double(ray.source.z) - \
-		fixed2double(sphere.coord.z)) * fixed2double(ray.direction.n_vec.z))));
-	c = double2fixed(pow(fixed2double(ray.source.x) - \
-		fixed2double(sphere.coord.x) , 2) + pow(fixed2double(ray.source.y) - \
-		fixed2double(sphere.coord.y), 2) + pow(fixed2double(ray.source.z) - \
-		fixed2double(sphere.coord.z), 2) - pow(fixed2double(sphere.diameter)/2, 2));
+	a = dtofx(pow(fxtod(ray.direction.n_vec.x), 2) + \
+		pow(fxtod(ray.direction.n_vec.y), 2) + \
+		pow(fxtod(ray.direction.n_vec.z), 2));
+	b = dtofx(2 * (((fxtod(ray.source.x) - \
+		fxtod(sphere.coord.x)) * fxtod(ray.direction.n_vec.x)) + \
+		((fxtod(ray.source.y) - fxtod(sphere.coord.y)) * \
+		fxtod(ray.direction.n_vec.y)) + ((fxtod(ray.source.z) - \
+		fxtod(sphere.coord.z)) * fxtod(ray.direction.n_vec.z))));
+	c = dtofx(pow(fxtod(ray.source.x) - \
+		fxtod(sphere.coord.x) , 2) + pow(fxtod(ray.source.y) - \
+		fxtod(sphere.coord.y), 2) + pow(fxtod(ray.source.z) - \
+		fxtod(sphere.coord.z), 2) - pow(fxtod(sphere.diameter)/2, 2));
 	result_num = ft_quadratic_solver(a, b, c, result);
 	if (result_num == 0)
-		return (long2fixed(-1));
+		return (ltofx(-1));
 	else if (result_num == 1)
 		return (result[0]);
 	if (result[0] > result[1])

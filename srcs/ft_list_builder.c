@@ -63,15 +63,15 @@ static int	ft_value_assignemnt(void *out, char **sub_split, int mode)
 			return (FT_ERR_VEC_RANGE);
 		else if (((temp < FT_MIN_COORD || temp > FT_MAX_COORD) && mode == FT_ASS_POINT))
 			return (FT_ERR_COORD_RANGE);
-		*(ft_ass_iterator(mode, i, out)) = double2fixed(temp);
+		*(ft_ass_iterator(mode, i, out)) = dtofx(temp);
 		i++;
 	}
 	if (mode == FT_ASS_VEC)
 	{
 		*((t_vec *)out) = ft_creat_vec(((t_vec *)out)->n_vec.x, ((t_vec *)out)->n_vec.y, ((t_vec *)out)->n_vec.z);
-		if (fixed2double(((t_vec *)out)->size) < 0.9999 || fixed2double(((t_vec *)out)->size) > 1.0001)
+		if (fxtod(((t_vec *)out)->size) < 0.9999 || fxtod(((t_vec *)out)->size) > 1.0001)
 			return (FT_ERR_VEC_SIZE);
-		((t_vec *)out)->size = long2fixed(1);
+		((t_vec *)out)->size = ltofx(1);
 	}
 	return (0);
 }
@@ -105,7 +105,7 @@ static int	ft_fill_vo(char **split, t_view_object *vo)
 		if (temp < 0 || temp > 180)
 			return(FT_ERR_C | FT_ERR_ANGLE_RANGE);
 		temp = temp * M_PI / 180;
-		vo->camera.angle = double2fixed(temp);
+		vo->camera.angle = dtofx(temp);
 	}
 	else if (!ft_strcmp(split[0], "A"))
 	{
@@ -114,7 +114,7 @@ static int	ft_fill_vo(char **split, t_view_object *vo)
 			return(FT_ERR_A | error);
 		if (temp < 0 || temp > 1)
 			return (FT_ERR_A | FT_ERR_RATIO_RANGE);
-		vo->ambient.light_ratio = double2fixed(temp);
+		vo->ambient.light_ratio = dtofx(temp);
 		sub_split = ft_split(split[2], ',');
 		if (sub_split == NULL)
 			return (FT_ERR_A | FT_ERR_BAD_LINE);
@@ -137,7 +137,7 @@ static int	ft_fill_vo(char **split, t_view_object *vo)
 			return(FT_ERR_L | error);
 		if (temp < 0 || temp > 1)
 			return(FT_ERR_L | FT_ERR_RATIO_RANGE);
-		vo->light.light_ratio = double2fixed(temp);
+		vo->light.light_ratio = dtofx(temp);
 	}
 	return (0);
 }
@@ -162,7 +162,7 @@ static int ft_create_sphere(void **s, char **split)
 		return(ft_list_creation_arg_error(FT_ERR_SP | error, NULL, sp));
 	if (temp < 0 || temp > FT_SP_MAX_DIAMETER)
 		return(ft_list_creation_arg_error(FT_ERR_SP | FT_ERR_DIAMETER_RANGE, NULL, sp));
-	sp->diameter = double2fixed(temp);
+	sp->diameter = dtofx(temp);
 	*s = (void *)sp;
 	return (0);
 }
@@ -219,13 +219,13 @@ static int ft_create_cylinder(void **s, char **split)
 		return(ft_list_creation_arg_error(FT_ERR_CY | error, NULL, cy));
 	if (temp < 0 || temp > FT_CY_MAX_DIAMETER)
 		return(ft_list_creation_arg_error(FT_ERR_CY | FT_ERR_DIAMETER_RANGE, NULL, cy));
-	cy->diameter = double2fixed(temp);
+	cy->diameter = dtofx(temp);
 	error = ft_atod(split[4], &temp);
 	if (error)
 		return(ft_list_creation_arg_error(FT_ERR_CY | error, NULL, cy));
 	if (temp < 0 || temp > FT_CY_MAX_HEIGHT)
 		return(ft_list_creation_arg_error(FT_ERR_CY | FT_ERR_HEIGHT_RANGE, NULL, cy));
-	cy->height = double2fixed(temp);
+	cy->height = dtofx(temp);
 	*s = (void *)cy;
 	return (0);
 }

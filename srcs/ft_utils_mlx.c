@@ -43,7 +43,7 @@ int ft_get_pixel(int x, int y, t_screen screen, t_list *gol, t_view_object vo)
 	
 	temp_l = gol;
 	ray = ft_screen_ray(screen, x, y);
-	distance = long2fixed(FT_BIGGEST_DIST);
+	distance = ltofx(FT_BIGGEST_DIST);
 	while (gol != NULL)
 	{
 		if (((t_geo_object *)(gol->content))->type == FT_SP_TYPE)
@@ -52,14 +52,14 @@ int ft_get_pixel(int x, int y, t_screen screen, t_list *gol, t_view_object vo)
 			temp = ft_plane_distance(*(((t_plane *)(((t_geo_object *)(gol->content))->s))), ray);
 		else if (((t_geo_object *)(gol->content))->type == FT_CY_TYPE)
 			temp = ft_cylinder_distance(*(((t_cylinder *)(((t_geo_object *)(gol->content))->s))), ray);
-		if (fixed2double(temp) > 0 && fixed2double(temp) < fixed2double(distance))
+		if (fxtod(temp) > 0 && fxtod(temp) < fxtod(distance))
 		{
 			distance = temp;
 			object = *((t_geo_object *)(gol->content));
 		}
 		gol = gol->next;
 	}
-	if (fixed2long(distance) != FT_BIGGEST_DIST)
+	if (fxtol(distance) != FT_BIGGEST_DIST)
 		return(ft_calc_all_light(ft_point_on_ray(ray, distance), object, vo, temp_l));
 
 	return (0); 

@@ -153,8 +153,6 @@ typedef struct s_mlx_view {
 
 typedef t_fixed t_rgb[3];
 
-//extern int g_error;
-
 /* ft_utils.c */
 
 int			ft_strcmp(char *s1, char *s2);
