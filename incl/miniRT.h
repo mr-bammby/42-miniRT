@@ -171,6 +171,7 @@ void		ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
 void		ft_argument_check(int argc, char **argv);
+int			ft_three_num_check(char* str);
 
 /* ft_list_builder.c */
 void		ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
@@ -230,5 +231,15 @@ int			ft_value_assignemnt(void *out, char **sub_split, int mode);
 /* ft_calc_diff_light.c */
 void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	t_geo_object object);
+
+/* ft_arg_check_vo.c */
+int			ft_arg_check_vo(char **line_split, int last_check, int fd, char *line);
+
+/* ft_arg_check_go.c */
+int			ft_arg_check_go(char **line_split, int fd, char *line);
+
+/* ft_arg_check_utils.c */
+void		ft_file_extension_check(char *file_name);
+int			ft_access_check(char *file_name);
 
 #endif
