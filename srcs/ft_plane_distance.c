@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_plane_distance.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 01:15:54 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/19 22:05:26 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:00:36 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param plane
-	@param ray
-	@return 
+	@brief Calculated the distance from the source of a ray and a plane.
+	@param plane Plane structure
+	@param ray The ray towards the plane.
+	@return Returns the disctance on success, else -1.
  */
 t_fixed	ft_plane_distance(t_plane plane, t_ray ray)
 {
@@ -30,7 +30,7 @@ t_fixed	ft_plane_distance(t_plane plane, t_ray ray)
 		fxtod(ray.source.z)));
 	intersection_check = ft_scalar_prod(vec_ray_point, plane.dir_vector);
 	parallel_check = ft_scalar_prod(ray.direction, plane.dir_vector);
-	if (fxtod(parallel_check) > 0.00001 || fxtod(parallel_check) < -0.00001)
+	if (fxtod(parallel_check) > FT_PR || fxtod(parallel_check) < -FT_PR)
 		return (dtofx(fxtod(intersection_check) / fxtod(parallel_check)));
 	return (ltofx(-1));
 }

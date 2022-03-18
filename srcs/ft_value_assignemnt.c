@@ -3,21 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_value_assignemnt.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 20:09:09 by mamuller          #+#    #+#             */
-/*   Updated: 2022/03/20 01:27:07 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 19:29:23 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param mode
-	@param num
-	@param out
-	@return 
+	@brief Creates vector in case the mode indicates for it and checks for the
+		validity.
+	@param out Respective view object structure part that needs to be filled with
+		converted and checked values.
+	@param mode Indicates the values to be checked for (point or vector).
+	@return 0 on success, else number that indicates on the error.
+*/
+static int	ft_vector_assigment(void *out, int mode)
+{
+	if (mode == FT_ASS_VEC)
+	{
+		*((t_vec *)out) = ft_creat_vec(((t_vec *)out)->n_vec.x, \
+			((t_vec *)out)->n_vec.y, ((t_vec *)out)->n_vec.z);
+		if (fxtod(((t_vec *)out)->size) < (1 - FT_PR) || \
+			fxtod(((t_vec *)out)->size) > (1 + FT_PR))
+			return (FT_ERR_VEC_SIZE);
+		((t_vec *)out)->size = ltofx(1);
+	}
+	return (0);
+}
+
+/**
+	@brief Fills the repective structure parts in regards of the type
+		(point/vector).
+	@param mode Indicates the values to be checked for (point or vector).
+	@param num Index of the number in sub_split.
+	@param out Respective view object structure part that needs to be filled with
+		converted and checked values.
+	@return 0 on success, else number that indicates on the error.
 */
 static t_fixed	*ft_ass_iterator(int mode, int num, void *out)
 {
@@ -44,31 +68,14 @@ static t_fixed	*ft_ass_iterator(int mode, int num, void *out)
 }
 
 /**
-	@brief
-	@param out
-	@param mode
-	@return 
-*/
-static int	ft_vector_assigment(void *out, int mode)
-{
-	if (mode == FT_ASS_VEC)
-	{
-		*((t_vec *)out) = ft_creat_vec(((t_vec *)out)->n_vec.x, \
-			((t_vec *)out)->n_vec.y, ((t_vec *)out)->n_vec.z);
-		if (fxtod(((t_vec *)out)->size) < 0.9999 || \
-			fxtod(((t_vec *)out)->size) > 1.0001)
-			return (FT_ERR_VEC_SIZE);
-		((t_vec *)out)->size = ltofx(1);
-	}
-	return (0);
-}
-
-/**
-	@brief
-	@param out
-	@param sub_split
-	@param mode
-	@return 
+	@brief Casts string values to number and checks for the respective
+		range values.
+	@param out Respective view object structure part that needs to be filled with
+		converted and checked values.
+	@param sub_split Null-terminated array of strings to be converted to
+		numbers.
+	@param mode Indicates the values to be checked for (point or vector).
+	@return 0 on success, else number that indicates on the error.
 */
 int	ft_value_assignemnt(void *out, char **sub_split, int mode)
 {

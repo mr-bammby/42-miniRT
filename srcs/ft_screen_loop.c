@@ -94,7 +94,7 @@ static int	ft_get_pixel(int pix[2], t_screen screen, t_list *gol, \
 }
 
 /**
-	@brief loops through every pixel of the screen view and calls for 
+	@brief Loops through every pixel of the screen view and calls for 
 		calculating the necessary color to be put on screen.
 	@param screen Screen object with the respective view field to calculate
 		the image for.

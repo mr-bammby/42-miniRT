@@ -65,7 +65,7 @@ static int	ft_esc(int key_code, void *mlx)
 		puts caluculated image to window.
 	@param screen Screen object with the respective view field to calculate
 		the image for.
-	@param gol Pointer to list of objects to be considered.
+	@param gol List of objects to be considered.
 	@param vo Structure with view objects (camera, ambient, light). 
 	@return None.
  */

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_vo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 22:26:38 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/19 23:21:00 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 19:08:35 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief 
-	@param split
-	@param vo
-	@param mode
-	@return 
+	@brief Calls the respective value assignment and frees sub_split.
+	@param sub_split Null-terminated array of strings to be converted to
+		numbers.
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@param mode Indicates the values to be checked for (point or vector).
+	@return 0 on success, else number that indicates on the error.
  */
 static int	ft_assign_and_free(char	**sub_split, t_view_object *vo, int mode)
 {
@@ -40,11 +41,11 @@ static int	ft_assign_and_free(char	**sub_split, t_view_object *vo, int mode)
 }
 
 /**
-	@brief 
-	@param split
-	@param vo
-	@return 
- */
+	@brief Fills the camera structure insides the view object structure.
+	@param split Null-terminated array of strings to be added.
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return 0 on success, else number that indicates on the error.
+*/
 static int	ft_fill_vo_camera(char **split, t_view_object *vo)
 {
 	double	temp;
@@ -74,11 +75,11 @@ static int	ft_fill_vo_camera(char **split, t_view_object *vo)
 }
 
 /**
-	@brief 
-	@param split
-	@param vo
-	@return 
- */
+	@brief Fills the ambient light structure insides the view object structure.
+	@param split Null-terminated array of strings to be added.
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return 0 on success, else number that indicates on the error.
+*/
 static int	ft_fill_vo_ambient(char **split, t_view_object *vo)
 {
 	double	temp;
@@ -103,11 +104,11 @@ static int	ft_fill_vo_ambient(char **split, t_view_object *vo)
 }
 
 /**
-	@brief 
-	@param split
-	@param vo
-	@return 
- */
+	@brief Fills the light structure insides the view object structure.
+	@param split Null-terminated array of strings to be added.
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return 0 on success, else number that indicates on the error.
+*/
 static int	ft_fill_vo_light(char **split, t_view_object *vo)
 {
 	double	temp;
@@ -132,11 +133,12 @@ static int	ft_fill_vo_light(char **split, t_view_object *vo)
 }
 
 /**
-	@brief 
-	@param split
-	@param vo
-	@return 
- */
+	@brief Saves data from split into the view object structure in regards of
+		object type.
+	@param split Null-terminated array of strings to be added.
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return 0 on success, else number that indicates on the error.
+*/
 int	ft_fill_vo(char **split, t_view_object *vo)
 {
 	int	error;

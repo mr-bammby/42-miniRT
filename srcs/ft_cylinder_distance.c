@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cylinder_distance.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 01:15:54 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 14:00:05 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/21 00:21:03 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param result
-	@return 
+	@brief Chooses the nearest intersection point out of the result array.
+	@param result Array with calculated results.
+	@return Returns the value of the nearest intersection point.
 */
 static t_fixed	ft_result_chooser(t_fixed result[2])
 {
@@ -29,12 +29,13 @@ static t_fixed	ft_result_chooser(t_fixed result[2])
 }
 
 /**
-	@brief
-	@param cy
-	@param ray
-	@param result
-	@param t
-	@return 
+	@brief Handles the calculation of distance on a ray with a cylinder
+		in case of two intersection points.
+	@param cy Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@param result Result array to store calculated intersection points in.
+	@param t Distance from the center of a cylinder to the given point.
+	@return Returns the distance to the nearest intersection point.
 */
 static t_fixed	ft_cylinder_distance_two_inter_hnd(t_cylinder cy, t_ray ray, \
 	t_fixed result[2], t_fixed t[2])
@@ -67,13 +68,13 @@ static t_fixed	ft_cylinder_distance_two_inter_hnd(t_cylinder cy, t_ray ray, \
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@param result
-	@return 
+	@brief Handles the calculation of intersection points on a ray and a cylinder.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@param result Result array to store calculated intersection points in.
+	@return Number of intersection points found.
 */
-static int	quad_equat_hnd(t_cylinder cylinder, t_ray ray, t_fixed result[2])
+static int	ft_quad_equat_hnd(t_cylinder cylinder, t_ray ray, t_fixed result[2])
 {
 	t_fixed	a;
 	t_fixed	b;
@@ -88,10 +89,11 @@ static int	quad_equat_hnd(t_cylinder cylinder, t_ray ray, t_fixed result[2])
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@return 
+	@brief Calculates the distance to the closest intersection point on
+		a given ray and a cylinder.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@return Distance or -1 in case of no intersection.
 */
 t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray)
 {
@@ -99,7 +101,7 @@ t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray)
 	t_fixed	result[2];
 	int		result_num;
 
-	result_num = quad_equat_hnd(cylinder, ray, result);
+	result_num = ft_quad_equat_hnd(cylinder, ray, result);
 	if (result_num == 0)
 		return (ltofx(-1));
 	t[0] = ft_point_height_loc(cylinder, ft_point_on_ray(ray, result[0]));

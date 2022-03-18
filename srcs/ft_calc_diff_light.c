@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calc_diff_light.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 11:56:34 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:53:49 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param sphere
-	@param point
-	@return 
+	@brief Calculates the surface vector for a sphere.
+	@param sphere Structure of a sphere object.
+	@param point he point on the sphere the surface vector needs to be
+		calculated for.
+	@return Returns the surface vector.
 */
 static t_vec	ft_sp_surface_vec(t_sphere sphere, t_point point)
 {
@@ -29,10 +30,11 @@ static t_vec	ft_sp_surface_vec(t_sphere sphere, t_point point)
 }
 
 /**
-	@brief
-	@param cylinder
-	@param point
-	@return 
+	@brief Calculates the surface vector for a cylinder.
+	@param cylinder Structure of a cylinder object.
+	@param point The point on the cylinder the surface vector needs to be
+		calculated for.
+	@return Returns the surface vector.
 */
 static t_vec	ft_cy_surface_vec(t_cylinder cylinder, t_point point)
 {
@@ -42,9 +44,9 @@ static t_vec	ft_cy_surface_vec(t_cylinder cylinder, t_point point)
 	t_vec	surface_vec;
 
 	cy_height = ft_point_height_loc(cylinder, point);
-	if (fabs(fxtod(cy_height) - fxtod(cylinder.height) / 2) < 0.0001)
+	if (fabs(fxtod(cy_height) - fxtod(cylinder.height) / 2) < FT_PR)
 		surface_vec = cylinder.dir_vector;
-	else if (fabs(fxtod(cy_height) + fxtod(cylinder.height) / 2) < 0.0001)
+	else if (fabs(fxtod(cy_height) + fxtod(cylinder.height) / 2) < FT_PR)
 		surface_vec = ft_rev_vec(cylinder.dir_vector);
 	else
 	{
@@ -63,12 +65,14 @@ static t_vec	ft_cy_surface_vec(t_cylinder cylinder, t_point point)
 }
 
 /**
-	@brief
-	@param rgb
-	@param light
-	@param point
-	@param object
-	@return 
+	@brief Calculates the light effect of diffuse light from a light source.
+	@param rgb The array that holds the rgb values for color and
+		light effects.
+	@param light Structure of the light view object.
+	@param point Point on the screen for which the light effect needs to be 
+		calculated.
+	@param object The geometric object.
+	@return None.
 */
 void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	t_geo_object object)
@@ -77,9 +81,6 @@ void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	t_vec	surface_vec;
 	t_fixed	scal_pr;
 
-	light_vec_inv = ft_creat_vec(dtofx(fxtod(light.coord.x) - fxtod(point.x)), \
-		dtofx(fxtod(light.coord.y) - fxtod(point.y)), \
-		dtofx(fxtod(light.coord.z) - fxtod(point.z)));
 	if (object.type == FT_SP_TYPE)
 		surface_vec = ft_sp_surface_vec(*((t_sphere *)(object.s)), point);
 	else if (object.type == FT_PL_TYPE)
@@ -89,6 +90,9 @@ void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	else
 		surface_vec = ft_creat_vec(0, 0, 0);
 	surface_vec.size = ltofx(1);
+	light_vec_inv = ft_creat_vec(dtofx(fxtod(light.coord.x) - fxtod(point.x)), \
+		dtofx(fxtod(light.coord.y) - fxtod(point.y)), \
+		dtofx(fxtod(light.coord.z) - fxtod(point.z)));
 	light_vec_inv.size = ltofx(1);
 	scal_pr = ft_scalar_prod(light_vec_inv, surface_vec);
 	if (object.type != FT_PL_TYPE && fxtod(scal_pr) <= 0)

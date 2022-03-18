@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_gol_geo_obj.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 23:19:39 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 01:33:32 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/21 00:33:43 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param s
-	@param split
-	@return 
+	@brief Allocates memory for sphere object and handles value assignment.
+	@param s Pointer to sphere structure pointer.
+	@param split Null-terminated array of strings to be added.
+	@return 0 on success, else number that indicates on the error.
 */
 int	ft_create_sphere(void **s, char **split)
 {
@@ -46,10 +46,10 @@ int	ft_create_sphere(void **s, char **split)
 }
 
 /**
-	@brief
-	@param s
-	@param split
-	@return 
+	@brief Allocates memory for plane object and handles value assignment.
+	@param s Pointer to plane structure pointer.
+	@param split Null-terminated array of strings to be added.
+	@return 0 on success, else number that indicates on the error.
 */
 int	ft_create_plane_builder(void **s, char **split)
 {
@@ -80,10 +80,11 @@ int	ft_create_plane_builder(void **s, char **split)
 }
 
 /**
-	@brief
-	@param split
-	@param cy
-	@return 
+	@brief Handles assignment of coordination and vector values to
+		cylinder structure.
+	@param split Null-terminated array of strings to be added.
+	@param cy Structure of a cylinder object.
+	@return 0 on success, else number that indicates on the error.
 */
 static int	ft_create_cylinder_coord_and_vec_hlp(char **split, t_cylinder *cy)
 {
@@ -111,10 +112,10 @@ static int	ft_create_cylinder_coord_and_vec_hlp(char **split, t_cylinder *cy)
 }
 
 /**
-	@brief
-	@param split
-	@param cy
-	@return 
+	@brief Checks and assigns the diameter and height value to cylinder structure.
+	@param split Null-terminated array of strings to be added.
+	@param cy Structure of a cylinder object.
+	@return 0 on success, else number that indicates on the error.
 */
 static int	ft_create_cylinder_diameter_height_hlp(char **split, t_cylinder *cy)
 {
@@ -139,10 +140,10 @@ static int	ft_create_cylinder_diameter_height_hlp(char **split, t_cylinder *cy)
 }
 
 /**
-	@brief
-	@param s
-	@param split
-	@return 
+	@brief Allocates memory for cyllinder object and handles value assignment.
+	@param s Pointer to cylinder structure pointer.
+	@param split Null-terminated array of strings to be added.
+	@return 0 on success, else number that indicates on the error.
 */
 int	ft_create_cylinder(void **s, char **split)
 {

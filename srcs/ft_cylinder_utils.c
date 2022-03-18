@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cylinder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 23:50:34 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 13:56:02 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/21 00:40:29 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param cylinder
-	@param point
-	@return 
+	@brief Calculates the distance of a point on a cylinder in regards to the
+		center part of the cylinder and its direction vector.
+	@param cylinder Structure of a cylinder object.
+	@param point Intersection point with a cylinder.
+	@return Returns the distance from the center of a cylinder to the
+		given point.
 */
 t_fixed	ft_point_height_loc(t_cylinder cylinder, t_point point)
 {
@@ -31,12 +33,17 @@ t_fixed	ft_point_height_loc(t_cylinder cylinder, t_point point)
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@param scal_prod
-	@param mode
-	@return 
+	@brief Calculates the distance to an intersection point on a ray on the
+		top/bottom part of a cylinder.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@param scal_prod Scalar product between the direction vector of the cylinder
+		and the ray.
+	@param mode Indicates if the return value needs to be checked for
+		the cylinder.
+	@return Returns the distance from ray source to the intersection point 
+		on top/bottom part of cylinder. -1 if distance value isn't in 
+			radius range.
 */
 t_fixed	ft_dist2disc(t_cylinder cylinder, t_ray ray, \
 	t_fixed scal_prod, int mode)
@@ -62,10 +69,10 @@ t_fixed	ft_dist2disc(t_cylinder cylinder, t_ray ray, \
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@return 
+	@brief Calculates the numerical coefficiant "c" for solving quadratic equations.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@return Returns the numerical coefficiant "c" for further calculations.
 */
 t_fixed	ft_numerical_coefficient_c(t_cylinder cylinder, t_ray ray)
 {
@@ -92,10 +99,10 @@ t_fixed	ft_numerical_coefficient_c(t_cylinder cylinder, t_ray ray)
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@return 
+	@brief Calculates the numerical coefficiant "b" for solving quadratic equations.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@return Returns the numerical coefficiant "b" for further calculations.
 */
 t_fixed	ft_numerical_coefficient_b(t_cylinder cylinder, t_ray ray)
 {
@@ -127,10 +134,10 @@ t_fixed	ft_numerical_coefficient_b(t_cylinder cylinder, t_ray ray)
 }
 
 /**
-	@brief
-	@param cylinder
-	@param ray
-	@return 
+	@brief Calculates the numerical coefficiant "a" for solving quadratic equations.
+	@param cylinder Structure of a cylinder object.
+	@param ray Structure of the ray to intersect with the cylinder.
+	@return Returns the numerical coefficiant "a" for further calculations.
 */
 t_fixed	ft_numerical_coefficient_a(t_cylinder cylinder, t_ray ray)
 {

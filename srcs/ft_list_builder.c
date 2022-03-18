@@ -13,11 +13,11 @@
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param split
-	@param gol
-	@param vo
-	@return 
+	@brief Runs appropriate builder function in regards of object type.
+	@param split Null-terminated array of strings to be added.
+	@param gol Pointer to list of objects (sphere, plane, cylinder).
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return 0 on success, else number that indicates on the error.
 */
 static int	ft_list_builder_exec(char **split, t_list **gol, t_view_object *vo)
 {
@@ -31,11 +31,11 @@ static int	ft_list_builder_exec(char **split, t_list **gol, t_view_object *vo)
 }
 
 /**
-	@brief
-	@param line
-	@param fd
-	@param gol
-	@return 
+	@brief Split a given line by space and clean exit on error.
+	@param line Line to be splitted.
+	@param fd Filedescriptor of opened file.
+	@param gol Pointer to list of objects (sphere, plane, cylinder).
+	@return Returns splitted line as null-terminated array of strings.
 */
 static char	**ft_list_builder_split(char *line, int fd, t_list **gol)
 {
@@ -51,11 +51,12 @@ static char	**ft_list_builder_split(char *line, int fd, t_list **gol)
 }
 
 /**
-	@brief
-	@param filename
-	@param gol
-	@param vo
-	@return 
+	@brief Loops through the given file line by line and creates list of geometrical
+		objects and structure of view objects.
+	@param filename The file to be read.
+	@param gol Pointer to list of objects (sphere, plane, cylinder).
+	@param vo Pointer to a structure with view objects (camera, ambient, light). 
+	@return None.
 */
 void	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
 {

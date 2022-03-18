@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screen_maker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:27:42 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/19 21:47:51 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 21:54:20 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param cam
-	@param distance
-	@param screen
-	@return 
+	@brief Inititalizes screen values for further calculation.
+	@param cam Structure of camera view object.
+	@param distance Distance to the screen.
+	@param screen Structure of view screen.
+	@return Returns the vector from camera to the most left up point of
+		the screen.
  */
 static t_vec	ft_init_screen(t_camera cam, t_fixed distance, t_screen screen)
 {
@@ -35,9 +36,9 @@ static t_vec	ft_init_screen(t_camera cam, t_fixed distance, t_screen screen)
 }
 
 /**
-	@brief
-	@param camera
-	@return 
+	@brief Creates the screen.
+	@param camera Structure of camera view object.
+	@return Returns the created screen object.
  */
 t_screen	ft_screen_maker(t_camera camera)
 {
@@ -63,11 +64,12 @@ t_screen	ft_screen_maker(t_camera camera)
 }
 
 /**
-	@brief
-	@param screen
-	@param x
-	@param y
-	@return 
+	@brief Creates a ray from the camera source to a specific pixel point on the
+		view screen.
+	@param screen Structure of view screen.
+	@param x X value of the pixel point.
+	@param y Y value of the pixel point.
+	@return Returns the calculated ray.
  */
 t_ray	ft_screen_ray(t_screen screen, int x, int y)
 {

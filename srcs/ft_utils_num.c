@@ -16,7 +16,7 @@
 	@brief Checks if string is valid number that can be converted.
 		Checks for the leading sign.
 	@param argv String to be checked.
-	@return Retruns 0 on success else 1.
+	@return Returns 0 on success else 1.
  */
 int	ft_digit_check(char *argv)
 {

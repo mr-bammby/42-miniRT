@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_light_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 11:54:53 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:44:42 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
 /**
-	@brief
-	@param obj
-	@param light_norm_rgb
-	@return 
+	@brief Calculates the color value as integer out of given rgb values.
+	@param obj The structure of the geometric object.
+	@param light_norm_rgb The array that holds the rgb values for color and
+		light effects.
+	@return Returns the color value as integer.
 */
 static int	ft_apply_light(t_geo_object obj, t_fixed light_norm_rgb[3])
 {
@@ -42,9 +43,10 @@ static int	ft_apply_light(t_geo_object obj, t_fixed light_norm_rgb[3])
 }
 
 /**
-	@brief
-	@param rgb
-	@param ambient
+	@brief Calculates the ambient light effect.
+	@param rgb The array that holds the rgb values for color and
+		light effects.
+	@param ambient Structure of the ambient light view object.
 	@return None.
 */
 static void	ft_calc_ambient(t_fixed rgb[3], t_ambient ambient)
@@ -58,12 +60,13 @@ static void	ft_calc_ambient(t_fixed rgb[3], t_ambient ambient)
 }
 
 /**
-	@brief
-	@param point
-	@param object
-	@param vo
-	@param gol
-	@return 
+	@brief Calculates all the light effects and their colors (ambient light,
+		diffuse light)
+	@param point Point on the view screen.
+	@param object The geometric object.
+	@param vo Structure with view objects (camera, ambient, light).
+	@param gol List of objects to be considered.
+	@return Returns the color value as integer.
 */
 int	ft_calc_all_light(t_point point, t_geo_object object, \
 	t_view_object vo, t_list *gol)
