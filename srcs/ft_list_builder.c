@@ -55,8 +55,8 @@ static int	ft_value_assignemnt(void *out, char **sub_split, int mode)
 	while (i < 3)
 	{
 		error = ft_atod(sub_split[i], &temp);
-		if (error == 2)
-			return(FT_ERR_NUM_RANGE); //Error: values out of number range (2)
+		if (error)
+			return(FT_ERR_NUM_RANGE);
 		if (((temp < FT_MIN_RGB || temp > FT_MAX_RGB) && mode == FT_ASS_RGB))
 			return (FT_ERR_RGB_RANGE);
 		else if (((temp < FT_MIN_NORM_VEC || temp > FT_MAX_NORM_VEC) && mode == FT_ASS_VEC))

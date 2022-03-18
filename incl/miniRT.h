@@ -51,8 +51,8 @@
 # define FT_SCREEN_HOR_PX 1000
 # define FT_SCREEN_VER_PX 1000
 
-# define PRINT_GOL 0
-# define PRINT_VO 0
+# define PRINT_GOL 1
+# define PRINT_VO 1
 
 # define FT_RADIUS_CHECK 1
 # define FT_NO_RADIUS_CHECK 0
@@ -163,7 +163,7 @@ void		ft_free_split(char **split);
 
 /* ft_utils_num.c */
 int			ft_digit_check(char *argv);
-int			ft_atoll(const char *str, long long int *out);
+int			ft_atoll(const char *str, long long int *out, int *j);
 int			ft_atod(char *str, double *out);
 
 /* ft_utils_mlx.c */

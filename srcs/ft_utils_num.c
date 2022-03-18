@@ -68,22 +68,22 @@ static void	ft_atoll_sign_checker(const char *str, int *i, int *j)
 	@brief Converts string int long long integer. Detects overflow.
 	@param str String to be converted.
 	@param out Pointer to converted number.(output value)
+	@param j Pointer of the sign value. 1 for positive and -1 for negative.
 	@return Retruns 0 on success else 2.
  */
-int	ft_atoll(const char *str, long long int *out)
+int	ft_atoll(const char *str, long long int *out, int *j)
 {
 	int				i;
-	int				j;
 	long long int	k;
 	long long int	old_k;
 
 	i = 0;
-	j = 1;
+	*j = 1;
 	k = 0;
 	old_k = 0;
 	while (str[i] != '\0' && (str[i] == ' ' || (str[i] > 8 && str[i] < 14)))
 		i++;
-	ft_atoll_sign_checker(str, &i, &j);
+	ft_atoll_sign_checker(str, &i, j);
 	while (str[i] != '\0' && (str[i] > 47 && str[i] < 58))
 	{
 		k = k * 10 + (str[i] - 48);
@@ -92,7 +92,7 @@ int	ft_atoll(const char *str, long long int *out)
 		old_k = k;
 		i++;
 	}
-	*out = k * j;
+	*out = k * *j;
 	return (0);
 }
 
@@ -110,14 +110,17 @@ static int ft_decimal_engine(char *str, double *out)
 		return (0);
 	str = ft_strtrim(str, "0");
 	if (str == NULL)
-		return (1);
+		return (FT_ERR_ALLOC_MEM);
 	sub_str_len = 8 - zero_counter;
 	if (ft_strlen(str) < sub_str_len)
 		sub_str_len = ft_strlen(str);
 	sub_str = ft_substr(str, 0, sub_str_len);
 	ft_smart_free((void **)&str);
 	decimal = ft_atoi(sub_str);
-	*out = *out + ((double) decimal / pow(10, zero_counter + sub_str_len));
+	if (*out < 0)
+		*out = *out - ((double) decimal / pow(10, zero_counter + sub_str_len));
+	else
+		*out = *out + ((double) decimal / pow(10, zero_counter + sub_str_len));
 	ft_smart_free((void **)&sub_str);
 	return (0);
 }
@@ -127,9 +130,11 @@ int	ft_atod(char *str, double *out)
 	char			**split;
 	int				error;
 	long long int	out_ll;
+	int				sign;
 
+	sign = 1;
 	split = ft_split(str, '.');
-	error = ft_atoll(split[0], &out_ll);
+	error = ft_atoll(split[0], &out_ll, &sign);
 	if (error)
 	{
 		ft_free_split(split);
@@ -144,6 +149,8 @@ int	ft_atod(char *str, double *out)
 		return (error);
 	}
 	ft_free_split(split);
+	if (*out > 0)
+		*out = *out * sign;
 	return (0);
 
 
