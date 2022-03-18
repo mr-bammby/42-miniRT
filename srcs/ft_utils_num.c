@@ -26,12 +26,20 @@ int	ft_digit_check(char *argv)
 	i = 0;
 	num_flag = 0;
 	while (argv[i])
-	{
+	{	
 		if (ft_isdigit(argv[i]) != 0)
 			num_flag = 1;
-		else if (argv[i] == '-' && i != 0)
-			return (1);
-		else if (argv[i] == '.' && num_flag == 0)
+		else if (argv[i] == '-')
+		{
+			if	(i != 0)
+				return (1);
+		}
+		else if (argv[i] == '.')
+		{
+			if (num_flag == 0)
+				return (1);
+		}
+		else
 			return (1);
 		i++;
 	}
@@ -60,7 +68,7 @@ static void	ft_atoll_sign_checker(const char *str, int *i, int *j)
 	@brief Converts string int long long integer. Detects overflow.
 	@param str String to be converted.
 	@param out Pointer to converted number.(output value)
-	@return Retruns 0 on success else 1.
+	@return Retruns 0 on success else 2.
  */
 int	ft_atoll(const char *str, long long int *out)
 {
@@ -80,7 +88,7 @@ int	ft_atoll(const char *str, long long int *out)
 	{
 		k = k * 10 + (str[i] - 48);
 		if (k < old_k)
-			return (1);
+			return (FT_ERR_NUM_RANGE);
 		old_k = k;
 		i++;
 	}

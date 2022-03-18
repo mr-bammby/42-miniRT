@@ -86,7 +86,7 @@ void ft_mlx(t_screen screen, t_list *gol, t_view_object vo)
 
 	mlx.mlx = mlx_init();
 	mlx.canvas.img = mlx_new_image(mlx.mlx, FT_SCREEN_HOR_PX, FT_SCREEN_VER_PX);
-		mlx.canvas.addr = mlx_get_data_addr(mlx.canvas.img, &mlx.canvas.bits_per_pixel, &mlx.canvas.line_length, &mlx.canvas.endian);
+	mlx.canvas.addr = mlx_get_data_addr(mlx.canvas.img, &mlx.canvas.bits_per_pixel, &mlx.canvas.line_length, &mlx.canvas.endian);
 	y = 0;
 	while (y < FT_SCREEN_VER_PX)
 	{

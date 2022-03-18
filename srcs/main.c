@@ -16,18 +16,14 @@ int g_error;
 
 int	main(int argc, char **argv)
 {
-	int				error;
 	t_list			*gol;
 	t_view_object	vo;
 	t_screen		screen;
 
 	g_error = 0;
 	gol = NULL;
-	error = argument_check(argc, argv);
-	if(error)
-		return (error);
-	error = ft_list_builder(argv[1], &gol, &vo);
-	//error = list_builder
+	ft_argument_check(argc, argv);
+	ft_list_builder(argv[1], &gol, &vo);
 	if (PRINT_GOL)
 		print_gol(gol);
 	if (PRINT_VO)
@@ -35,11 +31,6 @@ int	main(int argc, char **argv)
 	screen = ft_screen_maker(vo.camera);
 	ft_mlx(screen, gol, vo);
 	ft_exit_free(gol);
-	if (error)
-	{
-		printf ("Builder ERROR\n");
-		return (error);
-	}
 	return(0);
 	
 }

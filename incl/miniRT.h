@@ -51,11 +51,49 @@
 # define FT_SCREEN_HOR_PX 1000
 # define FT_SCREEN_VER_PX 1000
 
-# define PRINT_GOL 1
-# define PRINT_VO 1
+# define PRINT_GOL 0
+# define PRINT_VO 0
 
-#define FT_RADIUS_CHECK 1
-#define FT_NO_RADIUS_CHECK 0
+# define FT_RADIUS_CHECK 1
+# define FT_NO_RADIUS_CHECK 0
+
+# define FT_EXIT_ON_ERROR 1
+
+# define FT_ERR_ARG_NUM		"wrong number of arguments\n"
+# define FT_ERR_FILE_NAME	"unsupported file name\n"
+# define FT_ERR_FILE_ACCESS	"file not accessible\n"
+# define FT_ERR_UNKNOWN		"bad line read\n"
+# define FT_ERR_UNKNOWN_OBJ	"unknown object\n"
+# define FT_ERR_C_LESS		"no camera object\n"
+# define FT_ERR_C_MANY		"too many camera objects\n"
+# define FT_ERR_C_ARG_CHECK	"wrong camera arguments\n"
+# define FT_ERR_A_MANY		"too many ambient light objects\n"
+# define FT_ERR_A_ARG_CHECK	"wrong ambient light arguments\n"
+# define FT_ERR_L_MANY		"too many light objects\n"
+# define FT_ERR_L_ARG_CHECK	"wrong light arguments\n"
+# define FT_ERR_SP_ARG_CHECK	"wrong sphere arguments\n"
+# define FT_ERR_PL_ARG_CHECK	"wrong plane arguments\n"
+# define FT_ERR_CY_ARG_CHECK	"wrong cylinder arguments\n"
+
+typedef enum e_error_flags{
+	FT_ERR_C = 1 << 0,
+	FT_ERR_A = 1 << 1,
+	FT_ERR_L = 1 << 2,
+	FT_ERR_SP = 1 << 3,
+	FT_ERR_PL = 1 << 4,
+	FT_ERR_CY = 1 << 5,
+	FT_ERR_NUM_RANGE = 1 << 6,
+	FT_ERR_COORD_RANGE = 1 << 7,
+	FT_ERR_VEC_RANGE = 1 << 8,
+	FT_ERR_VEC_SIZE = 1 << 9,
+	FT_ERR_RGB_RANGE = 1 << 10,
+	FT_ERR_ANGLE_RANGE = 1 << 11,
+	FT_ERR_BAD_LINE = 1 << 12,
+	FT_ERR_RATIO_RANGE = 1 << 13,
+	FT_ERR_DIAMETER_RANGE = 1 << 14,
+	FT_ERR_HEIGHT_RANGE = 1 << 15,
+	FT_ERR_ALLOC_MEM = 1 << 16
+}		t_error_flags;
 
 typedef struct s_geo_object
 {
@@ -99,7 +137,7 @@ typedef struct s_screen
 
 }				t_screen;
 
-typedef struct	s_canvas {
+typedef struct s_canvas {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -107,7 +145,7 @@ typedef struct	s_canvas {
 	int		endian;
 }				t_canvas;
 
-typedef struct	s_mlx_view {
+typedef struct s_mlx_view {
 	void		*mlx;
 	void		*mlx_win;
 	t_canvas	canvas;
@@ -115,53 +153,58 @@ typedef struct	s_mlx_view {
 
 typedef t_fixed t_rgb[3];
 
-extern int g_error;
+//extern int g_error;
 
 /* ft_utils.c */
 
-int		ft_strcmp(char *s1, char *s2);
-void	ft_smart_free(void **ptr);
-void	ft_free_split(char **split);
+int			ft_strcmp(char *s1, char *s2);
+void		ft_smart_free(void **ptr);
+void		ft_free_split(char **split);
 
 /* ft_utils_num.c */
-int		ft_digit_check(char *argv);
-int		ft_atoll(const char *str, long long int *out);
-int		ft_atod(char *str, double *out);
+int			ft_digit_check(char *argv);
+int			ft_atoll(const char *str, long long int *out);
+int			ft_atod(char *str, double *out);
 
 /* ft_utils_mlx.c */
-void ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
+void		ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
-int argument_check(int argc, char **argv);
+void		ft_argument_check(int argc, char **argv);
 
 /* ft_list_builder.c */
-int	ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
+void		ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
 
 /* diagnostics.c */
-void print_gol(t_list *gol);
-void print_vo(t_view_object vo);
+void		print_gol(t_list *gol);
+void		print_vo(t_view_object vo);
 
 /* ft_exit_free.c */
-void ft_exit_free(t_list *gol);
+void		ft_exit_free(t_list *gol);
+void		ft_exit_on_arg_error(char *msg, char **split, int fd, char *line);
+int			ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s);
 
 /* ft_screen_maker.c */
-t_screen ft_screen_maker(t_camera camera);
-t_ray ft_screen_ray(t_screen screen, int x, int y);
+t_screen	ft_screen_maker(t_camera camera);
+t_ray		ft_screen_ray(t_screen screen, int x, int y);
 
 /* ft_sphere_distance.c */
-t_fixed ft_sphere_distance(t_sphere sphere, t_ray ray);
+t_fixed		ft_sphere_distance(t_sphere sphere, t_ray ray);
 
 /* ft_plane_distance.c */
-t_fixed ft_plane_distance(t_plane plane, t_ray ray);
+t_fixed		ft_plane_distance(t_plane plane, t_ray ray);
 
 /* ft_cylinder_distance.c */
-t_fixed	ft_cylinder_distance(t_cylinder cylinder, t_ray ray);
+t_fixed		ft_cylinder_distance(t_cylinder cylinder, t_ray ray);
 
 /* ft_light_stuff.c */
-int ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
+int			ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
 
 /* ft_cylinder_utils.c */
-t_fixed ft_point_height_loc(t_cylinder cylinder, t_point point);
-t_fixed ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
+t_fixed		ft_point_height_loc(t_cylinder cylinder, t_point point);
+t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
+
+/* ft_perror.c */
+void	ft_perror(t_error_flags error);
 
 #endif
