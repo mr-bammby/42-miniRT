@@ -186,6 +186,9 @@ int			ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s);
 t_screen	ft_screen_maker(t_camera camera);
 t_ray		ft_screen_ray(t_screen screen, int x, int y);
 
+/* ft_screen_loop.c */
+void	ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, 	t_mlx_view mlx);
+
 /* ft_sphere_distance.c */
 t_fixed		ft_sphere_distance(t_sphere sphere, t_ray ray);
 
