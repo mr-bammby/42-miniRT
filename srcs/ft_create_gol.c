@@ -6,7 +6,7 @@
 /*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 23:19:39 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 01:38:25 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 13:57:46 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ static int	ft_geo_obj_shp_setup(int type, t_geo_object **go, char **split)
 {
 	int	error;
 
-	*go = malloc(sizeof(t_geo_object));
+	*go = ft_calloc(1, sizeof(t_geo_object));
 	if (*go == NULL)
 		return ((FT_ERR_SP << type) | FT_ERR_ALLOC_MEM);
-	(*go)->s = NULL;
 	(*go)->type = type;
 	if (type == FT_SP_TYPE)
 	{

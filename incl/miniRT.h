@@ -59,6 +59,8 @@
 
 # define FT_EXIT_ON_ERROR 1
 
+#define FT_PR 0.0001
+
 # define FT_ERR_ARG_NUM		"wrong number of arguments\n"
 # define FT_ERR_FILE_NAME	"unsupported file name\n"
 # define FT_ERR_FILE_ACCESS	"file not accessible\n"
@@ -204,6 +206,9 @@ int			ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_
 /* ft_cylinder_utils.c */
 t_fixed		ft_point_height_loc(t_cylinder cylinder, t_point point);
 t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
+t_fixed		ft_numerical_coefficient_a(t_cylinder cylinder, t_ray ray);
+t_fixed		ft_numerical_coefficient_b(t_cylinder cylinder, t_ray ray);
+t_fixed		ft_numerical_coefficient_c(t_cylinder cylinder, t_ray ray);
 
 /* ft_perror.c */
 void		ft_perror(t_error_flags error);
@@ -221,5 +226,9 @@ int			ft_create_gol(char **split, t_list **gol);
 
 /* ft_create_gol.c */
 int			ft_value_assignemnt(void *out, char **sub_split, int mode);
+
+/* ft_calc_diff_light.c */
+void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+	t_geo_object object);
 
 #endif

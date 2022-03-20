@@ -12,20 +12,38 @@
 
 #include "../incl/miniRT.h"
 
+/**
+	@brief
+	@param tmp
+	@return 
+*/
 static void	del_gol(void *tmp)
 {
 	ft_smart_free((void **)(&((t_geo_object *)tmp)->s));
 	ft_smart_free((void **)&tmp);
 }
 
-void ft_exit_free(t_list *gol)
-{ 
+/**
+	@brief
+	@param gol
+	@return 
+*/
+void	ft_exit_free(t_list *gol)
+{
 	if (gol)
 		ft_lstclear(&gol, del_gol);
 	ft_smart_free((void **)(&gol));
 }
 
-void ft_exit_on_arg_error(char *msg, char **split, int fd, char *line)
+/**
+	@brief
+	@param msg
+	@param split
+	@param fd
+	@param line
+	@return 
+*/
+void	ft_exit_on_arg_error(char *msg, char **split, int fd, char *line)
 {
 	if (msg != NULL)
 	{
@@ -40,7 +58,14 @@ void ft_exit_on_arg_error(char *msg, char **split, int fd, char *line)
 	exit(FT_EXIT_ON_ERROR);
 }
 
-int ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s)
+/**
+	@brief
+	@param return_value
+	@param go
+	@param s
+	@return 
+*/
+int	ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s)
 {
 	ft_smart_free((void **)&s);
 	ft_smart_free((void **)&go);
