@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screen_maker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:27:42 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/19 00:50:58 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/19 21:47:51 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/miniRT.h"
 
+/**
+	@brief
+	@param cam
+	@param distance
+	@param screen
+	@return 
+ */
 static t_vec	ft_init_screen(t_camera cam, t_fixed distance, t_screen screen)
 {
 	t_vec	sum_vec;
@@ -27,6 +34,11 @@ static t_vec	ft_init_screen(t_camera cam, t_fixed distance, t_screen screen)
 	return (sum_vec);
 }
 
+/**
+	@brief
+	@param camera
+	@return 
+ */
 t_screen	ft_screen_maker(t_camera camera)
 {
 	t_screen	screen;
@@ -50,6 +62,13 @@ t_screen	ft_screen_maker(t_camera camera)
 	return (screen);
 }
 
+/**
+	@brief
+	@param screen
+	@param x
+	@param y
+	@return 
+ */
 t_ray	ft_screen_ray(t_screen screen, int x, int y)
 {
 	t_point	px_point;

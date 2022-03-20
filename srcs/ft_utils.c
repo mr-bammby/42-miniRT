@@ -28,7 +28,6 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-
 /**
 	@brief Frees and sets pointer to NULL. Is NULL protected.
 	@param s1: Pointer to a pointer to be freed.

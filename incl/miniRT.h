@@ -187,7 +187,7 @@ t_screen	ft_screen_maker(t_camera camera);
 t_ray		ft_screen_ray(t_screen screen, int x, int y);
 
 /* ft_screen_loop.c */
-void	ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, 	t_mlx_view mlx);
+void		ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, 	t_mlx_view mlx);
 
 /* ft_sphere_distance.c */
 t_fixed		ft_sphere_distance(t_sphere sphere, t_ray ray);
@@ -206,6 +206,20 @@ t_fixed		ft_point_height_loc(t_cylinder cylinder, t_point point);
 t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
 
 /* ft_perror.c */
-void	ft_perror(t_error_flags error);
+void		ft_perror(t_error_flags error);
+
+/* ft_fill_vo.c */
+int			ft_fill_vo(char **split, t_view_object *vo);
+
+/* ft_create_gol_geo_obj.c */
+int			ft_create_sphere(void **s, char **split);
+int			ft_create_plane_builder(void **s, char **split);
+int			ft_create_cylinder(void **s, char **split);
+
+/* ft_create_gol.c */
+int			ft_create_gol(char **split, t_list **gol);
+
+/* ft_create_gol.c */
+int			ft_value_assignemnt(void *out, char **sub_split, int mode);
 
 #endif
