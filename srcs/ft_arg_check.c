@@ -12,49 +12,22 @@
 
 #include "../incl/miniRT.h"
 
-static void file_extension_check(char *file_name)
+/**
+	@brief Checks for the amount of numbers and if they are digits for 
+		an argument category that should contain 3 numbers.
+	@param str String to be checked for argument category requirement.
+	@return 0 on success, else 1.
+*/
+int	ft_three_num_check(char *str)
 {
-	int cnt;
-	int len;
-
-	cnt = 0;
-	len = ft_strlen(file_name);
-	if (len < 4)
-		ft_exit_on_arg_error(FT_ERR_FILE_NAME, NULL, -1, NULL);
-	while (cnt < len - 3)
-	{
-		if (file_name[cnt] == '.' && cnt != 0)
-			ft_exit_on_arg_error(FT_ERR_FILE_NAME, NULL, -1, NULL);
-		cnt++;
-	}
-	if (file_name[cnt] == '.' && file_name[cnt + 1] == 'r' \
-		&& file_name[cnt + 2] == 't')
-		return ;
-	ft_exit_on_arg_error(FT_ERR_FILE_NAME, NULL, -1, NULL);
-}
-
-static int access_check(char *file_name)
-{
-	int fd;
-
-	fd = open(file_name, O_RDONLY);
-	if(fd == -1)
-		ft_exit_on_arg_error(FT_ERR_FILE_ACCESS, NULL, -1, NULL);
-	return (fd);
-}
-
-
-
-static int three_num_check(char* str)
-{
-	char **split;
-	int i;
+	char	**split;
+	int		i;
 
 	split = ft_split(str, ',');
 	if (split == NULL)
 		return (1);
 	i = 0;
-	while(split[i] != NULL)
+	while (split[i] != NULL)
 	{
 		if (i > 2)
 		{
@@ -74,165 +47,45 @@ static int three_num_check(char* str)
 	return (0);
 }
 
-static void main_line_check(char **line_split, int last_check, int fd, char *line)
+/**
+	@brief Assigns the appropriate function to check objects according to
+		their type.
+	@param line_split Array of strings separated by argument categories.
+	objects after inputfile was completely processed.
+	@param fd Filedescriptor of opened input file.
+	@param line Line that was read from input file.
+	@return None.
+*/
+static void	ft_arg_check_assignment(char **line_split, int fd, char *line)
 {
-	static int	a_cnt = 0;
-	static int	l_cnt = 0; 									//remove for bonus part
-	static int	c_cnt = 0;
-	int			i;
-
-	if (last_check)
-	{
-		if (c_cnt == 0)
-			ft_exit_on_arg_error(FT_ERR_C_LESS, NULL, fd, line);
-		else
-			return ;
-	}
-	i = 1;
-	if (!ft_strcmp(line_split[0], "C"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 3)
-				ft_exit_on_arg_error(FT_ERR_C_ARG_CHECK, line_split, fd, line);
-			else if (i == 1 || i == 2)
-			{
-				if(three_num_check(line_split[i]))
-					ft_exit_on_arg_error(FT_ERR_C_ARG_CHECK, line_split, fd, line);
-			}
-			else
-				if (ft_digit_check(line_split[i]) != 0)
-					ft_exit_on_arg_error(FT_ERR_C_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 4)
-			ft_exit_on_arg_error(FT_ERR_C_ARG_CHECK, line_split, fd, line);
-		c_cnt++;
-		if (c_cnt > 1)
-			ft_exit_on_arg_error(FT_ERR_C_MANY, line_split, fd, line);
-		return ;
-	}
-	else if (!ft_strcmp(line_split[0], "A"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 2)
-				ft_exit_on_arg_error(FT_ERR_A_ARG_CHECK, line_split, fd, line);
-			if (i == 2)
-			{
-				if(three_num_check(line_split[i]))
-					ft_exit_on_arg_error(FT_ERR_A_ARG_CHECK, line_split, fd, line);
-			}
-			else
-				if (ft_digit_check(line_split[i]) != 0)
-					ft_exit_on_arg_error(FT_ERR_A_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 3)
-			ft_exit_on_arg_error(FT_ERR_A_ARG_CHECK, line_split, fd, line);
-		a_cnt++;
-		if (a_cnt > 1)
-			ft_exit_on_arg_error(FT_ERR_A_MANY, line_split, fd, line);
-		return ;
-	}
-	else if (!ft_strcmp(line_split[0], "L"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 3)
-				ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
-			if (i == 1 || i == 3)
-			{
-				if(three_num_check(line_split[i]))
-					ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
-			}
-			else
-				if (ft_digit_check(line_split[i]) != 0)
-					ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 4)
-			ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
-		l_cnt++;
-		if (l_cnt > 1) ///remove for bonus part
-			ft_exit_on_arg_error(FT_ERR_L_MANY, line_split, fd, line);
-		return ;
-	}
-	ft_exit_on_arg_error(FT_ERR_UNKNOWN_OBJ, line_split, fd, line);
+	if (!ft_strcmp(line_split[0], "A") || !ft_strcmp(line_split[0], "L") || \
+		!ft_strcmp(line_split[0], "C"))
+		ft_arg_check_vo(line_split, 0, fd, line);
+	else if (!ft_strcmp(line_split[0], "sp") || \
+		!ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy"))
+		ft_arg_check_go(line_split, fd, line);
+	else
+		ft_exit_on_arg_error(FT_ERR_UNKNOWN_OBJ, line_split, fd, line);
 }
 
-static void object_line_check(char **line_split, int fd, char *line)
-{
-	int			i;
-
-	i = 1;
-	if (!ft_strcmp(line_split[0], "sp"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 3)
-				ft_exit_on_arg_error(FT_ERR_SP_ARG_CHECK, line_split, fd, line);
-			if (i == 1 || i == 3)
-			{
-				if(three_num_check(line_split[i]))
-					ft_exit_on_arg_error(FT_ERR_SP_ARG_CHECK, line_split, fd, line);
-			}
-			else
-				if (ft_digit_check(line_split[i]) != 0)
-					ft_exit_on_arg_error(FT_ERR_SP_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 4)
-			ft_exit_on_arg_error(FT_ERR_SP_ARG_CHECK, line_split, fd, line);
-		return ;
-	}
-	else if (!ft_strcmp(line_split[0], "pl"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 3)
-				ft_exit_on_arg_error(FT_ERR_PL_ARG_CHECK, line_split, fd, line);
-			if(three_num_check(line_split[i]))
-				ft_exit_on_arg_error(FT_ERR_PL_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 4)
-			ft_exit_on_arg_error(FT_ERR_PL_ARG_CHECK, line_split, fd, line);
-		return ;
-	}
-	else if (!ft_strcmp(line_split[0], "cy"))
-	{
-		while(line_split[i] != NULL)
-		{
-			if (i > 5)
-				ft_exit_on_arg_error(FT_ERR_CY_ARG_CHECK, line_split, fd, line);
-			if (i == 1 || i == 2 || i == 5)
-			{
-				if(three_num_check(line_split[i]))
-					ft_exit_on_arg_error(FT_ERR_CY_ARG_CHECK, line_split, fd, line);
-			}
-			else
-				if (ft_digit_check(line_split[i]) != 0)
-					ft_exit_on_arg_error(FT_ERR_CY_ARG_CHECK, line_split, fd, line);
-			i++;
-		}
-		if (i != 6)
-			ft_exit_on_arg_error(FT_ERR_CY_ARG_CHECK, line_split, fd, line);
-		return ;
-	}
-	ft_exit_on_arg_error(FT_ERR_UNKNOWN_OBJ, line_split, fd, line);
-}
-
-void line_check(char **line, int last_check, int fd)
+/**
+	@brief Divides the string in line into individual argument categories
+	and checks for their validity.
+	@param line Line that was read from input file.
+	@param last_check Indicator for checking the correct amount of mandatory
+		objects after inputfile was completely processed.
+	@param fd Filedescriptor of opened input file.
+	@return 0 on success.
+	@exception If last line has been processed, check if one camera object
+		is available (last_check == 1)
+*/
+static int	ft_arg_check_handler(char **line, int last_check, int fd)
 {
 	char		**line_split;
 	char		*temp;
 
 	if (last_check == 1)
-	{
-		main_line_check(NULL, 1, fd, NULL);
-		return ;
-	}
+		return (ft_arg_check_vo(NULL, 1, fd, NULL));
 	if (line == NULL || *line == NULL)
 		ft_exit_on_arg_error(FT_ERR_UNKNOWN, NULL, fd, *line);
 	temp = *line;
@@ -243,38 +96,39 @@ void line_check(char **line, int last_check, int fd)
 	}
 	line_split = ft_split(*line, ' ');
 	if (line_split == NULL)
-		return ; //check if that is newline problem
+		return (0);//check if that is newline problem
 	if (line_split[0] == NULL)
 	{
 		ft_free_split(line_split);
-		return ;
+		return (0);
 	}
-	if (!ft_strcmp(line_split[0], "A") || !ft_strcmp(line_split[0], "L") || !ft_strcmp(line_split[0], "C"))
-		main_line_check(line_split, 0, fd, *line);
-	else if (!ft_strcmp(line_split[0], "sp") || !ft_strcmp(line_split[0], "pl") || !ft_strcmp(line_split[0], "cy")) /////////////bonus add other shapes
-		object_line_check(line_split, fd, *line);
-	else
-		ft_exit_on_arg_error(FT_ERR_UNKNOWN_OBJ, line_split, fd, *line);
+	ft_arg_check_assignment(line_split, fd, *line);
 	ft_free_split(line_split);
+	return (0);
 }
 
-void ft_argument_check(int argc, char **argv)
+/**
+	@brief Checks for input file validity.
+	@param argc Number of arguments passed.
+	@param argv Arguments passed.
+	@return None.
+*/
+void	ft_argument_check(int argc, char **argv)
 {
-	char *line;
-	int fd;
+	char	*line;
+	int		fd;
 
 	if (argc != 2)
 		ft_exit_on_arg_error(FT_ERR_ARG_NUM, NULL, -1, NULL);
-	file_extension_check(argv[1]);
-	fd = access_check(argv[1]);
+	ft_file_extension_check(argv[1]);
+	fd = ft_access_check(argv[1]);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		line_check(&line, 0, fd);
+		ft_arg_check_handler(&line, 0, fd);
 		ft_smart_free((void **)&line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	line_check(NULL, 1, fd);
-	//return (0);
+	ft_arg_check_handler(NULL, 1, fd);
 }

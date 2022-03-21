@@ -59,6 +59,8 @@
 
 # define FT_EXIT_ON_ERROR 1
 
+#define FT_PR 0.0001
+
 # define FT_ERR_ARG_NUM		"wrong number of arguments\n"
 # define FT_ERR_FILE_NAME	"unsupported file name\n"
 # define FT_ERR_FILE_ACCESS	"file not accessible\n"
@@ -153,8 +155,6 @@ typedef struct s_mlx_view {
 
 typedef t_fixed t_rgb[3];
 
-//extern int g_error;
-
 /* ft_utils.c */
 
 int			ft_strcmp(char *s1, char *s2);
@@ -171,6 +171,7 @@ void		ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
 void		ft_argument_check(int argc, char **argv);
+int			ft_three_num_check(char* str);
 
 /* ft_list_builder.c */
 void		ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
@@ -188,6 +189,9 @@ int			ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s);
 t_screen	ft_screen_maker(t_camera camera);
 t_ray		ft_screen_ray(t_screen screen, int x, int y);
 
+/* ft_screen_loop.c */
+void		ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, 	t_mlx_view mlx);
+
 /* ft_sphere_distance.c */
 t_fixed		ft_sphere_distance(t_sphere sphere, t_ray ray);
 
@@ -203,8 +207,39 @@ int			ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_
 /* ft_cylinder_utils.c */
 t_fixed		ft_point_height_loc(t_cylinder cylinder, t_point point);
 t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
+t_fixed		ft_numerical_coefficient_a(t_cylinder cylinder, t_ray ray);
+t_fixed		ft_numerical_coefficient_b(t_cylinder cylinder, t_ray ray);
+t_fixed		ft_numerical_coefficient_c(t_cylinder cylinder, t_ray ray);
 
 /* ft_perror.c */
-void	ft_perror(t_error_flags error);
+void		ft_perror(t_error_flags error);
+
+/* ft_fill_vo.c */
+int			ft_fill_vo(char **split, t_view_object *vo);
+
+/* ft_create_gol_geo_obj.c */
+int			ft_create_sphere(void **s, char **split);
+int			ft_create_plane_builder(void **s, char **split);
+int			ft_create_cylinder(void **s, char **split);
+
+/* ft_create_gol.c */
+int			ft_create_gol(char **split, t_list **gol);
+
+/* ft_create_gol.c */
+int			ft_value_assignemnt(void *out, char **sub_split, int mode);
+
+/* ft_calc_diff_light.c */
+void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+	t_geo_object object);
+
+/* ft_arg_check_vo.c */
+int			ft_arg_check_vo(char **line_split, int last_check, int fd, char *line);
+
+/* ft_arg_check_go.c */
+int			ft_arg_check_go(char **line_split, int fd, char *line);
+
+/* ft_arg_check_utils.c */
+void		ft_file_extension_check(char *file_name);
+int			ft_access_check(char *file_name);
 
 #endif

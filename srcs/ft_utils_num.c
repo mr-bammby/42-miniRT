@@ -16,12 +16,12 @@
 	@brief Checks if string is valid number that can be converted.
 		Checks for the leading sign.
 	@param argv String to be checked.
-	@return Retruns 0 on success else 1.
+	@return Returns 0 on success else 1.
  */
 int	ft_digit_check(char *argv)
 {
 	int	i;
-	int num_flag;
+	int	num_flag;
 
 	i = 0;
 	num_flag = 0;
@@ -31,7 +31,7 @@ int	ft_digit_check(char *argv)
 			num_flag = 1;
 		else if (argv[i] == '-')
 		{
-			if	(i != 0)
+			if (i != 0)
 				return (1);
 		}
 		else if (argv[i] == '.')
@@ -69,7 +69,7 @@ static void	ft_atoll_sign_checker(const char *str, int *i, int *j)
 	@param str String to be converted.
 	@param out Pointer to converted number.(output value)
 	@param j Pointer of the sign value. 1 for positive and -1 for negative.
-	@return Retruns 0 on success else 2.
+	@return Returns 0 on success else respective error flag with number.
  */
 int	ft_atoll(const char *str, long long int *out, int *j)
 {
@@ -96,13 +96,13 @@ int	ft_atoll(const char *str, long long int *out, int *j)
 	return (0);
 }
 
-static int ft_decimal_engine(char *str, double *out)
+static int	ft_decimal_engine(char *str, double *out)
 {
 	int				zero_counter;
 	char			*sub_str;
 	unsigned int	sub_str_len;
 	int				decimal;
-	
+
 	zero_counter = 0;
 	while (str[zero_counter] == '0')
 		zero_counter++;
@@ -152,9 +152,4 @@ int	ft_atod(char *str, double *out)
 	if (*out > 0)
 		*out = *out * sign;
 	return (0);
-
-
-	
-
-
 }
