@@ -3,15 +3,6 @@ CFLAGS		= -g3 -Wall -Wextra -Werror
 RM			= rm -f
 SRCD		= ./srcs/
 
-
-UNAME = $(shell uname)
-#echo $(UNAME)
-
-SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx.c ft_arg_check.c ft_list_builder.c diagnostics.c ft_exit_free.c ft_screen_maker.c \
-				ft_sphere_distance.c ft_light_stuff.c ft_plane_distance.c ft_cylinder_distance.c ft_cylinder_utils.c ft_perror.c ft_screen_loop.c \
-				ft_fill_vo.c ft_create_gol_geo_obj.c ft_create_gol.c ft_value_assignemnt.c ft_calc_diff_light.c ft_arg_check_vo.c ft_arg_check_go.c\
-				ft_arg_check_utils.c
-
 # Command to add the source folder prefix (instead of having it added manually to SRC)
 SRCF		= $(addprefix $(SRCD),$(SRC))
 OBJD		= ./objs/
@@ -52,6 +43,11 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 MINILIB_D = ./mlx_linux
 
+SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx_linux.c ft_arg_check.c ft_list_builder.c diagnostics.c ft_exit_free.c ft_screen_maker.c \
+				ft_sphere_distance.c ft_light_stuff.c ft_plane_distance.c ft_cylinder_distance.c ft_cylinder_utils.c ft_perror.c ft_screen_loop.c \
+				ft_fill_vo.c ft_create_gol_geo_obj.c ft_create_gol.c ft_value_assignemnt.c ft_calc_diff_light.c ft_arg_check_vo.c ft_arg_check_go.c\
+				ft_arg_check_utils.c
+
 $(OBJD)%.o: $(SRCD)%.c 
 	@mkdir -p $(OBJD)
 	$(CC) $(CFLAGS) -I ${HEADD} -c -o $@ $<
@@ -67,6 +63,11 @@ endif
 
 ifeq ($(UNAME), Darwin)
 MINILIB_D = ./mlx_mac
+
+SRC			=	main.c ft_utils.c ft_utils_num.c ft_utils_mlx_mac.c ft_arg_check.c ft_list_builder.c diagnostics.c ft_exit_free.c ft_screen_maker.c \
+				ft_sphere_distance.c ft_light_stuff.c ft_plane_distance.c ft_cylinder_distance.c ft_cylinder_utils.c ft_perror.c ft_screen_loop.c \
+				ft_fill_vo.c ft_create_gol_geo_obj.c ft_create_gol.c ft_value_assignemnt.c ft_calc_diff_light.c ft_arg_check_vo.c ft_arg_check_go.c\
+				ft_arg_check_utils.c
 
 $(OBJD)%.o: $(SRCD)%.c 
 	@mkdir -p $(OBJD)

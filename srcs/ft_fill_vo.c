@@ -67,7 +67,7 @@ static int	ft_fill_vo_camera(char **split, t_view_object *vo)
 	error = ft_atod(split[3], &temp);
 	if (error)
 		return (FT_ERR_C | error);
-	if (temp < 0 || temp > 180)
+	if (temp < 0 || temp > 179.99)
 		return (FT_ERR_C | FT_ERR_ANGLE_RANGE);
 	temp = temp * M_PI / 180;
 	vo->camera.angle = dtofx(temp);

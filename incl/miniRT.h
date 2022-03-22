@@ -32,7 +32,7 @@
 
 # define FT_MAX_COORD 10000
 # define FT_MIN_COORD -FT_MAX_COORD
-# define FT_BIGGEST_DIST 3 * FT_MAX_COORD
+# define FT_BIGGEST_DIST 30000
 # define FT_SP_MAX_DIAMETER 1000
 # define FT_CY_MAX_DIAMETER 1000
 # define FT_CY_MAX_HEIGHT 1000
@@ -59,7 +59,7 @@
 
 # define FT_EXIT_ON_ERROR 1
 
-#define FT_PR 0.0001
+# define FT_PR 0.0001
 
 # define FT_ERR_ARG_NUM		"wrong number of arguments\n"
 # define FT_ERR_FILE_NAME	"unsupported file name\n"
@@ -108,7 +108,7 @@ typedef struct s_camera
 {
 	t_point		coord;
 	t_vec		dir_vector;
-	t_fixed		angle;	////////////////////////////////////////////in radians max angle is 179.9 degree
+	t_fixed		angle;
 }			t_camera;
 
 typedef struct s_light
@@ -153,7 +153,7 @@ typedef struct s_mlx_view {
 	t_canvas	canvas;
 }				t_mlx_view;
 
-typedef t_fixed t_rgb[3];
+typedef t_fixed	t_rgb[3];
 
 /* ft_utils.c */
 
@@ -171,7 +171,7 @@ void		ft_mlx(t_screen screen, t_list *gol, t_view_object vo);
 
 /* ft_arg_check.c */
 void		ft_argument_check(int argc, char **argv);
-int			ft_three_num_check(char* str);
+int			ft_three_num_check(char *str);
 
 /* ft_list_builder.c */
 void		ft_list_builder(char *filename, t_list **gol, t_view_object *vo);
@@ -183,14 +183,16 @@ void		print_vo(t_view_object vo);
 /* ft_exit_free.c */
 void		ft_exit_free(t_list *gol);
 void		ft_exit_on_arg_error(char *msg, char **split, int fd, char *line);
-int			ft_list_creation_arg_error(int return_value, t_geo_object *go, void *s);
+int			ft_list_creation_arg_error(int return_value, t_geo_object *go, \
+			void *s);
 
 /* ft_screen_maker.c */
 t_screen	ft_screen_maker(t_camera camera);
 t_ray		ft_screen_ray(t_screen screen, int x, int y);
 
 /* ft_screen_loop.c */
-void		ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, 	t_mlx_view mlx);
+void		ft_screen_loop(t_screen screen, t_list *gol, t_view_object vo, \
+			t_mlx_view mlx);
 
 /* ft_sphere_distance.c */
 t_fixed		ft_sphere_distance(t_sphere sphere, t_ray ray);
@@ -202,11 +204,13 @@ t_fixed		ft_plane_distance(t_plane plane, t_ray ray);
 t_fixed		ft_cylinder_distance(t_cylinder cylinder, t_ray ray);
 
 /* ft_light_stuff.c */
-int			ft_calc_all_light(t_point point, t_geo_object object, t_view_object vo, t_list *gol);
+int			ft_calc_all_light(t_point point, t_geo_object object, \
+			t_view_object vo, t_list *gol);
 
 /* ft_cylinder_utils.c */
 t_fixed		ft_point_height_loc(t_cylinder cylinder, t_point point);
-t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, int mode);
+t_fixed		ft_dist2disc(t_cylinder cylinder, t_ray ray, t_fixed scal_prod, \
+			int mode);
 t_fixed		ft_numerical_coefficient_a(t_cylinder cylinder, t_ray ray);
 t_fixed		ft_numerical_coefficient_b(t_cylinder cylinder, t_ray ray);
 t_fixed		ft_numerical_coefficient_c(t_cylinder cylinder, t_ray ray);
@@ -233,7 +237,8 @@ void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	t_geo_object object);
 
 /* ft_arg_check_vo.c */
-int			ft_arg_check_vo(char **line_split, int last_check, int fd, char *line);
+int			ft_arg_check_vo(char **line_split, int last_check, int fd, \
+			char *line);
 
 /* ft_arg_check_go.c */
 int			ft_arg_check_go(char **line_split, int fd, char *line);

@@ -40,8 +40,11 @@ static int	ft_list_builder_exec(char **split, t_list **gol, t_view_object *vo)
 static char	**ft_list_builder_split(char *line, int fd, t_list **gol)
 {
 	char	**split;
+	char	*trim_tmp;
 
-	split = ft_split(line, ' ');
+	trim_tmp = ft_strtrim(line, "\n");
+	split = ft_split(trim_tmp, ' ');
+	ft_smart_free((void **)&trim_tmp);
 	if (split == NULL)
 	{
 		ft_exit_free(*gol);

@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-#include "../../libft/incl/libft.h"
+# include "../../libft/incl/libft.h"
 
 # define BUFFER_SIZE 1
 
