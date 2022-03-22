@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <math.h>
 
-# define FT_FIXED_FRAC_BITS 30
+# define FT_FIXED_FRAC_BITS 28
 
 typedef long long		t_fixed;
 
