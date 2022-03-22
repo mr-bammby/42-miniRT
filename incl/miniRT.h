@@ -229,8 +229,8 @@ int			ft_create_gol(char **split, t_list **gol);
 int			ft_value_assignemnt(void *out, char **sub_split, int mode);
 
 /* ft_calc_diff_light.c */
-void		ft_calc_diff_light(t_fixed rgb[3], t_vec vec_arr_lsc[3], \
-	t_geo_object object, t_light light);
+void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+	t_geo_object object);
 
 /* ft_arg_check_vo.c */
 int			ft_arg_check_vo(char **line_split, int last_check, int fd, char *line);
@@ -242,8 +242,4 @@ int			ft_arg_check_go(char **line_split, int fd, char *line);
 void		ft_file_extension_check(char *file_name);
 int			ft_access_check(char *file_name);
 
-/* ft_create_light_stuff_vec.c */
-t_vec	ft_create_surface_vec(t_point point, t_geo_object object);
-t_vec	ft_create_light_vec(t_light light, t_point point);
-t_vec	ft_create_cam_vec(t_camera camera, t_point point);
 #endif
