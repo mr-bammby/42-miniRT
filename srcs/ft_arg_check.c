@@ -96,7 +96,7 @@ static int	ft_arg_check_handler(char **line, int last_check, int fd)
 	}
 	line_split = ft_split(*line, ' ');
 	if (line_split == NULL)
-		return (0);
+		return (0);//check if that is newline problem
 	if (line_split[0] == NULL)
 	{
 		ft_free_split(line_split);

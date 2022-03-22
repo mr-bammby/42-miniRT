@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_light_stuff_vec.c                        :+:      :+:    :+:   */
+/*   ft_calc_diff_light.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/21 22:37:15 by dbanfi           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:53:49 by mamuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,21 @@ static t_vec	ft_cy_surface_vec(t_cylinder cylinder, t_point point)
 }
 
 /**
-	@brief Calculates unit vector of surface(norm).
-	@param point Point on the surface of thee object.
+	@brief Calculates the light effect of diffuse light from a light source.
+	@param rgb The array that holds the rgb values for color and
+		light effects.
+	@param light Structure of the light view object.
+	@param point Point on the screen for which the light effect needs to be 
+		calculated.
 	@param object The geometric object.
-	@return Calculated vector.
+	@return None.
 */
-t_vec	ft_create_surface_vec(t_point point, t_geo_object object)
+void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+	t_geo_object object)
 {
+	t_vec	light_vec_inv;
 	t_vec	surface_vec;
+	t_fixed	scal_pr;
 
 	if (object.type == FT_SP_TYPE)
 		surface_vec = ft_sp_surface_vec(*((t_sphere *)(object.s)), point);
@@ -83,39 +90,16 @@ t_vec	ft_create_surface_vec(t_point point, t_geo_object object)
 	else
 		surface_vec = ft_creat_vec(0, 0, 0);
 	surface_vec.size = ltofx(1);
-	return (surface_vec);
-}
-
-/**
-	@brief Calculates unit vector from the point to light.
-	@param light Structure of the light view object.
-	@param point Point in space.
-	@return Calculated vector.
-*/
-t_vec	ft_create_light_vec(t_light light, t_point point)
-{
-	t_vec	light_vec_inv;
-
 	light_vec_inv = ft_creat_vec(dtofx(fxtod(light.coord.x) - fxtod(point.x)), \
 		dtofx(fxtod(light.coord.y) - fxtod(point.y)), \
 		dtofx(fxtod(light.coord.z) - fxtod(point.z)));
 	light_vec_inv.size = ltofx(1);
-	return (light_vec_inv);
-}
-
-/**
-	@brief Calculates unit vector from the point to camera.
-	@param camera Structure of the camera view object.
-	@param point Point in space.
-	@return Calculated vector.
-*/
-t_vec	ft_create_cam_vec(t_camera camera, t_point point)
-{
-	t_vec	camera_vec_inv;
-
-	camera_vec_inv = ft_creat_vec(dtofx(fxtod(camera.coord.x) - \
-		fxtod(point.x)), dtofx(fxtod(camera.coord.y) - fxtod(point.y)), \
-		dtofx(fxtod(camera.coord.z) - fxtod(point.z)));
-	camera_vec_inv.size = ltofx(1);
-	return (camera_vec_inv);
+	scal_pr = ft_scalar_prod(light_vec_inv, surface_vec);
+	if (object.type != FT_PL_TYPE && fxtod(scal_pr) <= 0)
+		return ;
+	else
+		scal_pr = dtofx(fabs(fxtod(scal_pr)));
+	rgb[0] = dtofx(fxtod(rgb[0]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
+	rgb[1] = dtofx(fxtod(rgb[1]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
+	rgb[2] = dtofx(fxtod(rgb[2]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
 }

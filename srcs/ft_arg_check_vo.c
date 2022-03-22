@@ -29,9 +29,9 @@ static int	ft_arg_check_vo_l(char **line_split, int *l_cnt, int fd, char *line)
 	i = 1;
 	while (line_split[i] != NULL)
 	{
-		if (i > 2)
+		if (i > 3)
 			ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
-		if (i == 1)
+		if (i == 1 || i == 3)
 		{
 			if (ft_three_num_check(line_split[i]))
 				ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
@@ -41,10 +41,10 @@ static int	ft_arg_check_vo_l(char **line_split, int *l_cnt, int fd, char *line)
 				ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
 		i++;
 	}
-	if (i != 3)
+	if (i != 4)
 		ft_exit_on_arg_error(FT_ERR_L_ARG_CHECK, line_split, fd, line);
 	(*l_cnt)++;
-	if (*l_cnt > 1)
+	if (*l_cnt > 1) ///remove for bonus part
 		ft_exit_on_arg_error(FT_ERR_L_MANY, line_split, fd, line);
 	return (0);
 }
@@ -136,7 +136,7 @@ static int	ft_arg_check_vo_c(char **line_split, int *c_cnt, int fd, char *line)
 int	ft_arg_check_vo(char **line_split, int last_check, int fd, char *line)
 {
 	static int	a_cnt = 0;
-	static int	l_cnt = 0;
+	static int	l_cnt = 0;//remove for bonus part
 	static int	c_cnt = 0;
 
 	if (last_check)
