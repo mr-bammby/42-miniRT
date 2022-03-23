@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screen_maker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 18:27:42 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 21:54:20 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/23 19:09:57 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ t_screen	ft_screen_maker(t_camera camera)
 	t_vec		sum_vec;
 
 	screen.camera = camera.coord;
-	screen.right = ft_cross_prod_vec(camera.dir_vector, ft_creat_vec(1, 0, 0));
+	screen.right = ft_cross_prod_vec(camera.dir_vector, \
+		ft_creat_vec(ltofx(1), 0, 0));
 	if (fxtod(screen.right.size) < 0.00001)
 		screen.right = ft_creat_vec(0, ltofx(1), 0);
+	screen.right.size = ltofx(1);
 	screen.down = ft_cross_prod_vec(camera.dir_vector, screen.right);
+	screen.down.size = ltofx(1);
 	distance = dtofx((FT_PX_SIZE * FT_SCREEN_HOR_PX / 2) / \
 		tan(fxtod(camera.angle) / 2));
 	sum_vec = ft_init_screen(camera, distance, screen);

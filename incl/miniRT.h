@@ -51,8 +51,8 @@
 # define FT_SCREEN_HOR_PX 1000
 # define FT_SCREEN_VER_PX 1000
 
-# define PRINT_GOL 1
-# define PRINT_VO 1
+# define PRINT_GOL 0
+# define PRINT_VO 0
 
 # define FT_RADIUS_CHECK 1
 # define FT_NO_RADIUS_CHECK 0
@@ -233,7 +233,7 @@ int			ft_create_gol(char **split, t_list **gol);
 int			ft_value_assignemnt(void *out, char **sub_split, int mode);
 
 /* ft_calc_diff_light.c */
-void		ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+void		ft_calc_diff_light(t_fixed rgb[3], t_view_object vo, t_point point, \
 	t_geo_object object);
 
 /* ft_arg_check_vo.c */
