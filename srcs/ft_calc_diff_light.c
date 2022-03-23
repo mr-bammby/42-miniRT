@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calc_diff_light.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 22:53:49 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/23 19:17:07 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,17 @@ static t_vec	ft_cy_surface_vec(t_cylinder cylinder, t_point point)
 	@brief Calculates the light effect of diffuse light from a light source.
 	@param rgb The array that holds the rgb values for color and
 		light effects.
-	@param light Structure of the light view object.
+	@param vo Structure with view objects (camera, ambient, light).
 	@param point Point on the screen for which the light effect needs to be 
 		calculated.
 	@param object The geometric object.
 	@return None.
 */
-void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
+void	ft_calc_diff_light(t_fixed rgb[3], t_view_object vo, t_point point, \
 	t_geo_object object)
 {
-	t_vec	light_vec_inv;
 	t_vec	surface_vec;
-	t_fixed	scal_pr;
+	t_fixed	scal;
 
 	if (object.type == FT_SP_TYPE)
 		surface_vec = ft_sp_surface_vec(*((t_sphere *)(object.s)), point);
@@ -90,16 +89,17 @@ void	ft_calc_diff_light(t_fixed rgb[3], t_light light, t_point point, \
 	else
 		surface_vec = ft_creat_vec(0, 0, 0);
 	surface_vec.size = ltofx(1);
-	light_vec_inv = ft_creat_vec(dtofx(fxtod(light.coord.x) - fxtod(point.x)), \
-		dtofx(fxtod(light.coord.y) - fxtod(point.y)), \
-		dtofx(fxtod(light.coord.z) - fxtod(point.z)));
-	light_vec_inv.size = ltofx(1);
-	scal_pr = ft_scalar_prod(light_vec_inv, surface_vec);
-	if (object.type != FT_PL_TYPE && fxtod(scal_pr) <= 0)
+	scal = ft_scalar_prod(ft_create_vec_from_points(point, \
+		vo.light.coord, ltofx(1)), surface_vec);
+	if (object.type == FT_PL_TYPE && \
+		((fxtod(ft_scalar_prod(ft_create_vec_from_points(point, \
+		vo.camera.coord, ltofx(1)), surface_vec)) * fxtod(scal)) > 0))
+		scal = dtofx(fabs(fxtod(scal)));
+	else if (object.type == FT_PL_TYPE)
 		return ;
-	else
-		scal_pr = dtofx(fabs(fxtod(scal_pr)));
-	rgb[0] = dtofx(fxtod(rgb[0]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
-	rgb[1] = dtofx(fxtod(rgb[1]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
-	rgb[2] = dtofx(fxtod(rgb[2]) + (fxtod(scal_pr) * fxtod(light.light_ratio)));
+	if (fxtod(scal) <= 0)
+		return ;
+	rgb[0] = dtofx(fxtod(rgb[0]) + (fxtod(scal) * fxtod(vo.light.light_ratio)));
+	rgb[1] = dtofx(fxtod(rgb[1]) + (fxtod(scal) * fxtod(vo.light.light_ratio)));
+	rgb[2] = dtofx(fxtod(rgb[2]) + (fxtod(scal) * fxtod(vo.light.light_ratio)));
 }

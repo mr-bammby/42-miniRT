@@ -21,10 +21,6 @@ int	main(int argc, char **argv)
 	gol = NULL;
 	ft_argument_check(argc, argv);
 	ft_list_builder(argv[1], &gol, &vo);
-	if (PRINT_GOL)
-		print_gol(gol);
-	if (PRINT_VO)
-		print_vo(vo);
 	screen = ft_screen_maker(vo.camera);
 	ft_mlx(screen, gol, vo);
 	ft_exit_free(gol);

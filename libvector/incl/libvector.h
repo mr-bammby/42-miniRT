@@ -69,6 +69,7 @@ long	fxtol(t_fixed in);
 double	fxtod(t_fixed in);
 
 t_vec	ft_creat_vec(t_fixed x, t_fixed y, t_fixed z);
+t_vec	ft_create_vec_from_points(t_point start, t_point end, t_fixed size);
 t_vec	ft_add_vec(t_vec vec1, t_vec vec2);
 t_vec	ft_sub_vec(t_vec vec1, t_vec vec2);
 t_fixed	ft_scalar_prod(t_vec vec1, t_vec vec2);

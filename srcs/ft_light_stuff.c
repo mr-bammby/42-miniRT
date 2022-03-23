@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_light_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mamuller <mamuller@student.42wolfsburg>    +#+  +:+       +#+        */
+/*   By: dbanfi <dbanfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 14:58:09 by dbanfi            #+#    #+#             */
-/*   Updated: 2022/03/20 22:44:42 by mamuller         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:39:26 by dbanfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int	ft_calc_all_light(t_point point, t_geo_object object, \
 			return (ft_apply_light(object, out_norm_rgb));
 		gol = gol->next;
 	}
-	ft_calc_diff_light(out_norm_rgb, vo.light, point, object);
+	ft_calc_diff_light(out_norm_rgb, vo, point, object);
 	return (ft_apply_light(object, out_norm_rgb));
 }

@@ -72,9 +72,9 @@ void	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		split = ft_list_builder_split(line, fd, gol);
-		if (ft_strcmp(split[0], "\n"))
+		if (ft_strcmp(line, "\n"))
 		{
+			split = ft_list_builder_split(line, fd, gol);
 			error = ft_list_builder_exec(split, gol, vo);
 			if (error != 0)
 			{
@@ -82,8 +82,8 @@ void	ft_list_builder(char *filename, t_list **gol, t_view_object *vo)
 				ft_exit_free(*gol);
 				ft_exit_on_arg_error(NULL, split, fd, line);
 			}
+			ft_free_split(split);
 		}
-		ft_free_split(split);
 		ft_smart_free((void **)&line);
 		line = get_next_line(fd);
 	}
