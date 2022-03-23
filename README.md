@@ -5,7 +5,7 @@ Small raytarcing project. Can render Sphere, Plane and Cylinder. Can use colored
 Renders object given in a config file with .rt file extension. How to make .rt file is described in subject. More info in subject.
 
 ### MLX
-Library for displaying picture. Tested on mac and linux systems. [Documentation avaliable here.]{https://harm-smits.github.io/42docs/libs/minilibx}
+Library for displaying picture. Tested on mac and linux systems. [Documentation avaliable here.](https://harm-smits.github.io/42docs/libs/minilibx)
 
 ### libvector
 Small well documented library for performing vector and other calculation used in a project.
@@ -27,4 +27,4 @@ Small well documented library for performing vector and other calculation used i
 
 
 ## Installing requirements:
-Requires preinstalled MLX library with both mac and linux version. Installaton instructions for MLX [avaliable here]{https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html}.
+Requires preinstalled MLX library with both mac and linux version. Installaton instructions for MLX [avaliable here](https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html).
